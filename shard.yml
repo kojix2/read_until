@@ -6,7 +6,7 @@ authors:
 
 dependencies:
   minknow:
-    path: ../minknow.cr
+    github: kojix2/minknow
 
 crystal: '>= 1.19.1'
 
