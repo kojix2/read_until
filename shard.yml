@@ -8,6 +8,6 @@ dependencies:
   minknow:
     github: kojix2/minknow
 
-crystal: '>= 1.19.1'
+crystal: '>= 1.20.0'
 
 license: MIT
