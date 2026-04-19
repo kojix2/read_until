@@ -1,0 +1,13 @@
+name: read_until
+version: 0.1.0
+
+authors:
+  - kojix2 <2xijok@gmail.com>
+
+dependencies:
+  minknow:
+    path: ../minknow.cr
+
+crystal: '>= 1.19.1'
+
+license: MIT
