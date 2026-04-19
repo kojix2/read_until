@@ -23,12 +23,6 @@ Run `shards install`
 require "read_until"
 ```
 
-The simplest compile-oriented example is in examples/basic.cr.
-
-It wires a Minknow manager, position, connection, and ReadUntil client together
-without performing real RPCs yet. That makes it a good first Ubuntu smoke test
-once the real transport layer starts landing.
-
 Run example:
 
 ```sh

@@ -2,7 +2,8 @@ require "./spec_helper"
 
 describe ReadUntil do
   it "can be initialized with a Minknow connection" do
-    manager = Minknow::Manager.new(Minknow::ConnectionConfig.new(host: "localhost", port: 9501))
+    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501)
+    manager = Minknow::Manager.new(config)
     position = Minknow::FlowCellPosition.new("X4", "localhost", 9600)
     connection = manager.connect(position)
 
@@ -41,5 +42,9 @@ describe ReadUntil do
 
     client.drain_actions.should eq([first, second])
     client.drain_actions.should be_empty
+  end
+
+  it "has a version number" do
+    ReadUntil::VERSION.should be_a(String)
   end
 end

@@ -1,8 +1,7 @@
 require "minknow"
+require "./read_until/version"
 
 module ReadUntil
-  VERSION = "0.1.0"
-
   enum ActionKind
     Unblock
     StopReceiving
