@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.19.1">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="read_until">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="read_until">
+  <title>ReadUntil::ChannelBuffer - read_until main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          read_until
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="read_until/ReadUntil" data-name="readuntil">
+      <a href="../ReadUntil.html">ReadUntil</a>
+      
+        <ul>
+  
+  <li class=" " data-id="read_until/ReadUntil/AcquisitionProgress" data-name="readuntil::acquisitionprogress">
+      <a href="../ReadUntil/AcquisitionProgress.html">AcquisitionProgress</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionCounters" data-name="readuntil::actioncounters">
+      <a href="../ReadUntil/ActionCounters.html">ActionCounters</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionKind" data-name="readuntil::actionkind">
+      <a href="../ReadUntil/ActionKind.html">ActionKind</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionStats" data-name="readuntil::actionstats">
+      <a href="../ReadUntil/ActionStats.html">ActionStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionToken" data-name="readuntil::actiontoken">
+      <a href="../ReadUntil/ActionToken.html">ActionToken</a>
+      
+    </li>
+  
+  <li class=" current" data-id="read_until/ReadUntil/ChannelBuffer" data-name="readuntil::channelbuffer">
+      <a href="../ReadUntil/ChannelBuffer.html">ChannelBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ClassificationRegistry" data-name="readuntil::classificationregistry">
+      <a href="../ReadUntil/ClassificationRegistry.html">ClassificationRegistry</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Client" data-name="readuntil::client">
+      <a href="../ReadUntil/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Config" data-name="readuntil::config">
+      <a href="../ReadUntil/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/PopOrder" data-name="readuntil::poporder">
+      <a href="../ReadUntil/PopOrder.html">PopOrder</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Prefilter" data-name="readuntil::prefilter">
+      <a href="../ReadUntil/Prefilter.html">Prefilter</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/RawDataKind" data-name="readuntil::rawdatakind">
+      <a href="../ReadUntil/RawDataKind.html">RawDataKind</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Read" data-name="readuntil::read">
+      <a href="../ReadUntil/Read.html">Read</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadBuffer" data-name="readuntil::readbuffer">
+      <a href="../ReadUntil/ReadBuffer.html">ReadBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadClass" data-name="readuntil::readclass">
+      <a href="../ReadUntil/ReadClass.html">ReadClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadRef" data-name="readuntil::readref">
+      <a href="../ReadUntil/ReadRef.html">ReadRef</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Session" data-name="readuntil::session">
+      <a href="../ReadUntil/Session.html">Session</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/SignalFormat" data-name="readuntil::signalformat">
+      <a href="../ReadUntil/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Stats" data-name="readuntil::stats">
+      <a href="../ReadUntil/Stats.html">Stats</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/StreamMode" data-name="readuntil::streammode">
+      <a href="../ReadUntil/StreamMode.html">StreamMode</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> ReadUntil::<wbr>ChannelBuffer
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../ReadUntil/ChannelBuffer.html">ReadUntil::ChannelBuffer</a></li><li class="superclass"><a href="../ReadUntil/ReadBuffer.html">ReadUntil::ReadBuffer</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L375" target="_blank">
+        read_until.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28capacity%3AInt32%3D512%29-class-method" class="signature"><strong>.new</strong>(capacity : Int32 = <span class="n">512</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#capacity%3AInt32-instance-method" class="signature"><strong>#capacity</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clear%3ANil-instance-method" class="signature"><strong>#clear</strong> : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#missed_reads%3AUInt64-instance-method" class="signature"><strong>#missed_reads</strong> : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pop%28max%3AInt32%3D1%2Corder%3APopOrder%3DPopOrder%3A%3ANewest%29%3AArray%28Read%29-instance-method" class="signature"><strong>#pop</strong>(max : Int32 = <span class="n">1</span>, order : PopOrder = <span class="t">PopOrder</span><span class="t">::</span><span class="t">Newest</span>) : Array(Read)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#push%28read%3ARead%29%3ANil-instance-method" class="signature"><strong>#push</strong>(read : Read) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#replaced_chunks%3AUInt64-instance-method" class="signature"><strong>#replaced_chunks</strong> : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+  <h3>Instance methods inherited from class <code><a href="../ReadUntil/ReadBuffer.html">ReadUntil::ReadBuffer</a></code></h3>
+  
+  
+    <a href="../ReadUntil/ReadBuffer.html#clear%3ANil-instance-method" class="tooltip">
+      <span>clear : Nil</span>
+    clear</a>, 
+    
+  
+    <a href="../ReadUntil/ReadBuffer.html#missed_reads%3AUInt64-instance-method" class="tooltip">
+      <span>missed_reads : UInt64</span>
+    missed_reads</a>, 
+    
+  
+    <a href="../ReadUntil/ReadBuffer.html#pop%28max%3AInt32%3D1%2Corder%3APopOrder%3DPopOrder%3A%3ANewest%29%3AArray%28Read%29-instance-method" class="tooltip">
+      <span>pop(max : Int32 = <span class="n">1</span>, order : PopOrder = <span class="t">PopOrder</span><span class="t">::</span><span class="t">Newest</span>) : Array(Read)</span>
+    pop</a>, 
+    
+  
+    <a href="../ReadUntil/ReadBuffer.html#push%28read%3ARead%29%3ANil-instance-method" class="tooltip">
+      <span>push(read : Read) : Nil</span>
+    push</a>, 
+    
+  
+    <a href="../ReadUntil/ReadBuffer.html#replaced_chunks%3AUInt64-instance-method" class="tooltip">
+      <span>replaced_chunks : UInt64</span>
+    replaced_chunks</a>, 
+    
+  
+    <a href="../ReadUntil/ReadBuffer.html#size%3AInt32-instance-method" class="tooltip">
+      <span>size : Int32</span>
+    size</a>
+    
+  
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(capacity:Int32=512)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(capacity : Int32 = <span class="n">512</span>)
+
+        <a class="method-permalink" href="#new%28capacity%3AInt32%3D512%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L380" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="capacity:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>capacity</strong> : Int32
+
+        <a class="method-permalink" href="#capacity%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L376" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clear:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>clear</strong> : Nil
+
+        <a class="method-permalink" href="#clear%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L429" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="missed_reads:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>missed_reads</strong> : UInt64
+
+        <a class="method-permalink" href="#missed_reads%3AUInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L377" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pop(max:Int32=1,order:PopOrder=PopOrder::Newest):Array(Read)-instance-method">
+      <div class="signature">
+        
+        def <strong>pop</strong>(max : Int32 = <span class="n">1</span>, order : <a href="../ReadUntil/PopOrder.html">PopOrder</a> = <span class="t">PopOrder</span><span class="t">::</span><span class="t">Newest</span>) : Array(<a href="../ReadUntil/Read.html">Read</a>)
+
+        <a class="method-permalink" href="#pop%28max%3AInt32%3D1%2Corder%3APopOrder%3DPopOrder%3A%3ANewest%29%3AArray%28Read%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L409" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="push(read:Read):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>push</strong>(read : <a href="../ReadUntil/Read.html">Read</a>) : Nil
+
+        <a class="method-permalink" href="#push%28read%3ARead%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L387" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="replaced_chunks:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>replaced_chunks</strong> : UInt64
+
+        <a class="method-permalink" href="#replaced_chunks%3AUInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L378" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Int32
+
+        <a class="method-permalink" href="#size%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L436" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.19.1">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="read_until">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="read_until">
+  <title>ReadUntil::Config - read_until main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          read_until
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="read_until/ReadUntil" data-name="readuntil">
+      <a href="../ReadUntil.html">ReadUntil</a>
+      
+        <ul>
+  
+  <li class=" " data-id="read_until/ReadUntil/AcquisitionProgress" data-name="readuntil::acquisitionprogress">
+      <a href="../ReadUntil/AcquisitionProgress.html">AcquisitionProgress</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionCounters" data-name="readuntil::actioncounters">
+      <a href="../ReadUntil/ActionCounters.html">ActionCounters</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionKind" data-name="readuntil::actionkind">
+      <a href="../ReadUntil/ActionKind.html">ActionKind</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionStats" data-name="readuntil::actionstats">
+      <a href="../ReadUntil/ActionStats.html">ActionStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionToken" data-name="readuntil::actiontoken">
+      <a href="../ReadUntil/ActionToken.html">ActionToken</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ChannelBuffer" data-name="readuntil::channelbuffer">
+      <a href="../ReadUntil/ChannelBuffer.html">ChannelBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ClassificationRegistry" data-name="readuntil::classificationregistry">
+      <a href="../ReadUntil/ClassificationRegistry.html">ClassificationRegistry</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Client" data-name="readuntil::client">
+      <a href="../ReadUntil/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" current" data-id="read_until/ReadUntil/Config" data-name="readuntil::config">
+      <a href="../ReadUntil/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/PopOrder" data-name="readuntil::poporder">
+      <a href="../ReadUntil/PopOrder.html">PopOrder</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Prefilter" data-name="readuntil::prefilter">
+      <a href="../ReadUntil/Prefilter.html">Prefilter</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/RawDataKind" data-name="readuntil::rawdatakind">
+      <a href="../ReadUntil/RawDataKind.html">RawDataKind</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Read" data-name="readuntil::read">
+      <a href="../ReadUntil/Read.html">Read</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadBuffer" data-name="readuntil::readbuffer">
+      <a href="../ReadUntil/ReadBuffer.html">ReadBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadClass" data-name="readuntil::readclass">
+      <a href="../ReadUntil/ReadClass.html">ReadClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadRef" data-name="readuntil::readref">
+      <a href="../ReadUntil/ReadRef.html">ReadRef</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Session" data-name="readuntil::session">
+      <a href="../ReadUntil/Session.html">Session</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/SignalFormat" data-name="readuntil::signalformat">
+      <a href="../ReadUntil/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Stats" data-name="readuntil::stats">
+      <a href="../ReadUntil/Stats.html">Stats</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/StreamMode" data-name="readuntil::streammode">
+      <a href="../ReadUntil/StreamMode.html">StreamMode</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> ReadUntil::<wbr>Config
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../ReadUntil/Config.html">ReadUntil::Config</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L172" target="_blank">
+        read_until.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28channels%3ARange%28Int32%2CInt32%29%3D1..512%2Craw_data%3ARawDataKind%3DRawDataKind%3A%3ACalibrated%2Cmin_chunk_size%3AUInt64%3D0_u64%2Cmode%3AStreamMode%3DStreamMode%3A%3AOneChunk%2Cprefilter%3APrefilter%3DPrefilter.none%2Caction_batch_size%3AInt32%3D1000%2Caction_throttle%3ATime%3A%3ASpan%3D1.millisecond%2Cunblock_duration%3ATime%3A%3ASpan%3D100.milliseconds%29-class-method" class="signature"><strong>.new</strong>(channels : Range(Int32, Int32) = <span class="n">1</span>..<span class="n">512</span>, raw_data : RawDataKind = <span class="t">RawDataKind</span><span class="t">::</span><span class="t">Calibrated</span>, min_chunk_size : UInt64 = <span class="n">0_u64</span>, mode : StreamMode = <span class="t">StreamMode</span><span class="t">::</span><span class="t">OneChunk</span>, prefilter : Prefilter = <span class="t">Prefilter</span>.none, action_batch_size : Int32 = <span class="n">1000</span>, action_throttle : Time::Span = <span class="n">1</span>.millisecond, unblock_duration : Time::Span = <span class="n">100</span>.milliseconds)</a>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#action_batch_size%3AInt32-instance-method" class="signature"><strong>#action_batch_size</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#action_throttle%3ATime%3A%3ASpan-instance-method" class="signature"><strong>#action_throttle</strong> : Time::Span</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#channels%3ARange%28Int32%2CInt32%29-instance-method" class="signature"><strong>#channels</strong> : Range(Int32, Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#first_channel%3AInt32-instance-method" class="signature"><strong>#first_channel</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#last_channel%3AInt32-instance-method" class="signature"><strong>#last_channel</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min_chunk_size%3AUInt64-instance-method" class="signature"><strong>#min_chunk_size</strong> : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mode%3AStreamMode-instance-method" class="signature"><strong>#mode</strong> : StreamMode</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#one_chunk%3F%3ABool-instance-method" class="signature"><strong>#one_chunk?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#prefilter%3APrefilter-instance-method" class="signature"><strong>#prefilter</strong> : Prefilter</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#raw_data%3ARawDataKind-instance-method" class="signature"><strong>#raw_data</strong> : RawDataKind</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_setup_request%3AMinknowApi%3A%3AData%3A%3AGetLiveReadsRequest-instance-method" class="signature"><strong>#to_setup_request</strong> : MinknowApi::Data::GetLiveReadsRequest</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unblock_duration%3ATime%3A%3ASpan-instance-method" class="signature"><strong>#unblock_duration</strong> : Time::Span</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#with%28%2A%2Cchannels%3ARange%28Int32%2CInt32%29%7CNil%3Dnil%2Craw_data%3ARawDataKind%7CNil%3Dnil%2Cmin_chunk_size%3AUInt64%7CNil%3Dnil%2Cprefilter%3APrefilter%7CNil%3Dnil%29%3AConfig-instance-method" class="signature"><strong>#with</strong>(*, channels : Range(Int32, Int32) | Nil = <span class="n">nil</span>, raw_data : RawDataKind | Nil = <span class="n">nil</span>, min_chunk_size : UInt64 | Nil = <span class="n">nil</span>, prefilter : Prefilter | Nil = <span class="n">nil</span>) : Config</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(channels:Range(Int32,Int32)=1..512,raw_data:RawDataKind=RawDataKind::Calibrated,min_chunk_size:UInt64=0_u64,mode:StreamMode=StreamMode::OneChunk,prefilter:Prefilter=Prefilter.none,action_batch_size:Int32=1000,action_throttle:Time::Span=1.millisecond,unblock_duration:Time::Span=100.milliseconds)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(channels : Range(Int32, Int32) = <span class="n">1</span>..<span class="n">512</span>, raw_data : <a href="../ReadUntil/RawDataKind.html">RawDataKind</a> = <span class="t">RawDataKind</span><span class="t">::</span><span class="t">Calibrated</span>, min_chunk_size : UInt64 = <span class="n">0_u64</span>, mode : <a href="../ReadUntil/StreamMode.html">StreamMode</a> = <span class="t">StreamMode</span><span class="t">::</span><span class="t">OneChunk</span>, prefilter : <a href="../ReadUntil/Prefilter.html">Prefilter</a> = <span class="t">Prefilter</span>.none, action_batch_size : Int32 = <span class="n">1000</span>, action_throttle : Time::Span = <span class="n">1</span>.millisecond, unblock_duration : Time::Span = <span class="n">100</span>.milliseconds)
+
+        <a class="method-permalink" href="#new%28channels%3ARange%28Int32%2CInt32%29%3D1..512%2Craw_data%3ARawDataKind%3DRawDataKind%3A%3ACalibrated%2Cmin_chunk_size%3AUInt64%3D0_u64%2Cmode%3AStreamMode%3DStreamMode%3A%3AOneChunk%2Cprefilter%3APrefilter%3DPrefilter.none%2Caction_batch_size%3AInt32%3D1000%2Caction_throttle%3ATime%3A%3ASpan%3D1.millisecond%2Cunblock_duration%3ATime%3A%3ASpan%3D100.milliseconds%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L182" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="action_batch_size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>action_batch_size</strong> : Int32
+
+        <a class="method-permalink" href="#action_batch_size%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L178" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="action_throttle:Time::Span-instance-method">
+      <div class="signature">
+        
+        def <strong>action_throttle</strong> : Time::Span
+
+        <a class="method-permalink" href="#action_throttle%3ATime%3A%3ASpan-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L179" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="channels:Range(Int32,Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>channels</strong> : Range(Int32, Int32)
+
+        <a class="method-permalink" href="#channels%3ARange%28Int32%2CInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L173" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="first_channel:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>first_channel</strong> : Int32
+
+        <a class="method-permalink" href="#first_channel%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L200" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="last_channel:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>last_channel</strong> : Int32
+
+        <a class="method-permalink" href="#last_channel%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L204" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min_chunk_size:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>min_chunk_size</strong> : UInt64
+
+        <a class="method-permalink" href="#min_chunk_size%3AUInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L175" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mode:StreamMode-instance-method">
+      <div class="signature">
+        
+        def <strong>mode</strong> : <a href="../ReadUntil/StreamMode.html">StreamMode</a>
+
+        <a class="method-permalink" href="#mode%3AStreamMode-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L176" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="one_chunk?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>one_chunk?</strong> : Bool
+
+        <a class="method-permalink" href="#one_chunk%3F%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L196" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="prefilter:Prefilter-instance-method">
+      <div class="signature">
+        
+        def <strong>prefilter</strong> : <a href="../ReadUntil/Prefilter.html">Prefilter</a>
+
+        <a class="method-permalink" href="#prefilter%3APrefilter-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L177" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="raw_data:RawDataKind-instance-method">
+      <div class="signature">
+        
+        def <strong>raw_data</strong> : <a href="../ReadUntil/RawDataKind.html">RawDataKind</a>
+
+        <a class="method-permalink" href="#raw_data%3ARawDataKind-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L174" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_setup_request:MinknowApi::Data::GetLiveReadsRequest-instance-method">
+      <div class="signature">
+        
+        def <strong>to_setup_request</strong> : MinknowApi::Data::GetLiveReadsRequest
+
+        <a class="method-permalink" href="#to_setup_request%3AMinknowApi%3A%3AData%3A%3AGetLiveReadsRequest-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L227" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unblock_duration:Time::Span-instance-method">
+      <div class="signature">
+        
+        def <strong>unblock_duration</strong> : Time::Span
+
+        <a class="method-permalink" href="#unblock_duration%3ATime%3A%3ASpan-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L180" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="with(*,channels:Range(Int32,Int32)|Nil=nil,raw_data:RawDataKind|Nil=nil,min_chunk_size:UInt64|Nil=nil,prefilter:Prefilter|Nil=nil):Config-instance-method">
+      <div class="signature">
+        
+        def <strong>with</strong>(*, channels : Range(Int32, Int32) | Nil = <span class="n">nil</span>, raw_data : <a href="../ReadUntil/RawDataKind.html">RawDataKind</a> | Nil = <span class="n">nil</span>, min_chunk_size : UInt64 | Nil = <span class="n">nil</span>, prefilter : <a href="../ReadUntil/Prefilter.html">Prefilter</a> | Nil = <span class="n">nil</span>) : <a href="../ReadUntil/Config.html">Config</a>
+
+        <a class="method-permalink" href="#with%28%2A%2Cchannels%3ARange%28Int32%2CInt32%29%7CNil%3Dnil%2Craw_data%3ARawDataKind%7CNil%3Dnil%2Cmin_chunk_size%3AUInt64%7CNil%3Dnil%2Cprefilter%3APrefilter%7CNil%3Dnil%29%3AConfig-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L208" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

@@ -62,23 +62,103 @@
       
         <ul>
   
-  <li class=" " data-id="read_until/ReadUntil/ReadCache" data-name="readuntil::readcache">
-      <a href="ReadUntil/ReadCache.html">ReadCache</a>
+  <li class=" " data-id="read_until/ReadUntil/AcquisitionProgress" data-name="readuntil::acquisitionprogress">
+      <a href="ReadUntil/AcquisitionProgress.html">AcquisitionProgress</a>
       
     </li>
   
-  <li class=" " data-id="read_until/ReadUntil/ReadChunk" data-name="readuntil::readchunk">
-      <a href="ReadUntil/ReadChunk.html">ReadChunk</a>
+  <li class=" " data-id="read_until/ReadUntil/ActionCounters" data-name="readuntil::actioncounters">
+      <a href="ReadUntil/ActionCounters.html">ActionCounters</a>
       
     </li>
   
-  <li class=" " data-id="read_until/ReadUntil/ReadUntilClient" data-name="readuntil::readuntilclient">
-      <a href="ReadUntil/ReadUntilClient.html">ReadUntilClient</a>
+  <li class=" " data-id="read_until/ReadUntil/ActionKind" data-name="readuntil::actionkind">
+      <a href="ReadUntil/ActionKind.html">ActionKind</a>
       
     </li>
   
-  <li class=" " data-id="read_until/ReadUntil/StreamOptions" data-name="readuntil::streamoptions">
-      <a href="ReadUntil/StreamOptions.html">StreamOptions</a>
+  <li class=" " data-id="read_until/ReadUntil/ActionStats" data-name="readuntil::actionstats">
+      <a href="ReadUntil/ActionStats.html">ActionStats</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ActionToken" data-name="readuntil::actiontoken">
+      <a href="ReadUntil/ActionToken.html">ActionToken</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ChannelBuffer" data-name="readuntil::channelbuffer">
+      <a href="ReadUntil/ChannelBuffer.html">ChannelBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ClassificationRegistry" data-name="readuntil::classificationregistry">
+      <a href="ReadUntil/ClassificationRegistry.html">ClassificationRegistry</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Client" data-name="readuntil::client">
+      <a href="ReadUntil/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Config" data-name="readuntil::config">
+      <a href="ReadUntil/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/PopOrder" data-name="readuntil::poporder">
+      <a href="ReadUntil/PopOrder.html">PopOrder</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Prefilter" data-name="readuntil::prefilter">
+      <a href="ReadUntil/Prefilter.html">Prefilter</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/RawDataKind" data-name="readuntil::rawdatakind">
+      <a href="ReadUntil/RawDataKind.html">RawDataKind</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Read" data-name="readuntil::read">
+      <a href="ReadUntil/Read.html">Read</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadBuffer" data-name="readuntil::readbuffer">
+      <a href="ReadUntil/ReadBuffer.html">ReadBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadClass" data-name="readuntil::readclass">
+      <a href="ReadUntil/ReadClass.html">ReadClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/ReadRef" data-name="readuntil::readref">
+      <a href="ReadUntil/ReadRef.html">ReadRef</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Session" data-name="readuntil::session">
+      <a href="ReadUntil/Session.html">Session</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/SignalFormat" data-name="readuntil::signalformat">
+      <a href="ReadUntil/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/Stats" data-name="readuntil::stats">
+      <a href="ReadUntil/Stats.html">Stats</a>
+      
+    </li>
+  
+  <li class=" " data-id="read_until/ReadUntil/StreamMode" data-name="readuntil::streammode">
+      <a href="ReadUntil/StreamMode.html">StreamMode</a>
       
     </li>
   
@@ -119,11 +199,21 @@
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;read_until&quot;</span></code></pre>
 <p>Run example:</p>
 <pre><code class="language-sh">crystal run examples/basic.cr</code></pre>
-<p>Expected output shape:</p>
-<pre><code class="language-text">endpoint=&lt;host:port&gt;
-running=true
-latest_read_id=&lt;read-id&gt;
-queued_actions=&lt;n&gt;</code></pre>
+<p>Minimal streaming shape:</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">ReadUntil</span><span class="t">::</span><span class="t">Client</span>.new(connection)
+
+client.open(
+  channels: <span class="n">1</span>..<span class="n">512</span>,
+  mode: <span class="t">ReadUntil</span><span class="t">::</span><span class="t">StreamMode</span><span class="t">::</span><span class="t">OneChunk</span>,
+  prefilter: <span class="t">ReadUntil</span><span class="t">::</span><span class="t">Prefilter</span>.strand_like(<span class="n">:strand</span>, <span class="n">:adapter</span>),
+) <span class="k">do</span> <span class="o">|</span>session<span class="o">|</span>
+  session.each_read(batch_size: <span class="n">16</span>) <span class="k">do</span> <span class="o">|</span>read<span class="o">|</span>
+    signal <span class="o">=</span> read.signal(<span class="t">Int16</span>)
+    <span class="k">if</span> reject?(signal)
+      session.unblock(read, <span class="k">for</span>: <span class="n">100</span>.milliseconds)
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
 <h2><a id="development" class="anchor" href="#development">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
