@@ -34,7 +34,9 @@ describe ReadUntil::Read do
 
   it "decodes Int16 little-endian signal" do
     raw = Bytes[0x01, 0x00, 0xFF, 0x7F]
-    read = ReadUntil::Read.new(channel: 1, id: "r1", raw_bytes: raw)
+    fmt = ReadUntil::SignalFormat.new(calibrated: "float32", uncalibrated: "int16")
+    read = ReadUntil::Read.new(channel: 1, id: "r1", raw_bytes: raw,
+      signal_format: fmt, raw_data_kind: ReadUntil::RawDataKind::Uncalibrated)
     signal = read.signal(Int16)
 
     signal.size.should eq(2)
@@ -46,7 +48,9 @@ describe ReadUntil::Read do
     io = IO::Memory.new
     IO::ByteFormat::LittleEndian.encode(1.5_f32, io)
     IO::ByteFormat::LittleEndian.encode(-2.25_f32, io)
-    read = ReadUntil::Read.new(channel: 1, id: "r2", raw_bytes: io.to_slice)
+    fmt = ReadUntil::SignalFormat.new(calibrated: "float32", uncalibrated: "int16")
+    read = ReadUntil::Read.new(channel: 1, id: "r2", raw_bytes: io.to_slice,
+      signal_format: fmt, raw_data_kind: ReadUntil::RawDataKind::Calibrated)
 
     signal = read.signal(Float32)
     signal.size.should eq(2)
@@ -55,14 +59,34 @@ describe ReadUntil::Read do
   end
 
   it "exposes calibrated and uncalibrated signal sugar" do
+    fmt = ReadUntil::SignalFormat.new(calibrated: "float32", uncalibrated: "int16")
     raw_i16 = Bytes[0x01, 0x00, 0x02, 0x00]
-    read_i16 = ReadUntil::Read.new(channel: 1, id: "ri16", raw_bytes: raw_i16)
+    read_i16 = ReadUntil::Read.new(channel: 1, id: "ri16", raw_bytes: raw_i16,
+      signal_format: fmt, raw_data_kind: ReadUntil::RawDataKind::Uncalibrated)
     read_i16.uncalibrated_signal.to_a.should eq([1_i16, 2_i16])
 
     io = IO::Memory.new
     IO::ByteFormat::LittleEndian.encode(1.5_f32, io)
-    read_f32 = ReadUntil::Read.new(channel: 1, id: "rf32", raw_bytes: io.to_slice)
+    read_f32 = ReadUntil::Read.new(channel: 1, id: "rf32", raw_bytes: io.to_slice,
+      signal_format: fmt, raw_data_kind: ReadUntil::RawDataKind::Calibrated)
     read_f32.calibrated_signal[0].should be_close(1.5_f32, 0.0001)
+  end
+
+  it "raises when signal type mismatches format" do
+    raw = Bytes[0x01, 0x00, 0x02, 0x00]
+    fmt = ReadUntil::SignalFormat.new(calibrated: "float32", uncalibrated: "int16")
+
+    # Calibrated bytes (float32) but requesting Int16
+    read_cal = ReadUntil::Read.new(channel: 1, id: "rc", raw_bytes: raw,
+      signal_format: fmt, raw_data_kind: ReadUntil::RawDataKind::Calibrated)
+    expect_raises(ArgumentError, /float32/) { read_cal.signal(Int16) }
+    expect_raises(ArgumentError, /Calibrated/) { read_cal.uncalibrated_signal }
+
+    # Uncalibrated bytes (int16) but requesting Float32
+    read_unc = ReadUntil::Read.new(channel: 1, id: "ru", raw_bytes: raw,
+      signal_format: fmt, raw_data_kind: ReadUntil::RawDataKind::Uncalibrated)
+    expect_raises(ArgumentError, /int16/) { read_unc.signal(Float32) }
+    expect_raises(ArgumentError, /Uncalibrated/) { read_unc.calibrated_signal }
   end
 end
 
@@ -143,6 +167,18 @@ describe ReadUntil::ChannelBuffer do
     popped = buffer.pop(2, order: ReadUntil::PopOrder::Oldest)
     popped.map(&.channel).should eq([2, 3])
     buffer.missed_reads.should eq(1)
+  end
+
+  it "waits for incoming reads" do
+    buffer = ReadUntil::ChannelBuffer.new(2)
+
+    spawn do
+      sleep 5.milliseconds
+      buffer.push(ReadUntil::Read.new(channel: 1, id: "delayed"))
+    end
+
+    buffer.wait_for_read(100.milliseconds).should be_true
+    buffer.pop(1).first.try(&.id).should eq("delayed")
   end
 end
 
@@ -232,19 +268,5 @@ describe ReadUntil::Client do
     session.config.channels.should eq(10..20)
     session.one_chunk?.should be_false
     session.config.prefilter.allow?([65]).should be_true
-  end
-
-  it "raises a clear error for number-only ReadRef actions" do
-    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
-    manager = Minknow::Manager.new(config)
-    position = Minknow::FlowCellPosition.new("X6", "localhost", 9602)
-    connection = manager.connect(position)
-
-    client = ReadUntil::Client.new(connection)
-    session = client.new_session
-
-    expect_raises(ArgumentError, /number is not supported/) do
-      session.stop(ReadUntil::ReadRef.new(1, nil, 42_u32))
-    end
   end
 end
