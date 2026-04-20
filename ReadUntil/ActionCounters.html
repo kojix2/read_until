@@ -213,8 +213,8 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L54" target="_blank">
-        read_until.cr
+      <a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L2" target="_blank">
+        read_until/stats.cr
       </a>
     
     <br/>
@@ -225,6 +225,23 @@
 
 
   
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
+    
+  </ul>
+
 
   
 
@@ -247,7 +264,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#failed%3D%28failed%3AUInt64%29-instance-method" class="signature"><strong>#failed=</strong>(failed : UInt64)</a>
+        <a href="#failed%3D%28value%3AUInt64%29%3AUInt64-instance-method" class="signature"><strong>#failed=</strong>(value : UInt64) : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#increment_failed%3ANil-instance-method" class="signature"><strong>#increment_failed</strong> : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#increment_success%3ANil-instance-method" class="signature"><strong>#increment_success</strong> : Nil</a>
         
       </li>
     
@@ -257,7 +284,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#success%3D%28success%3AUInt64%29-instance-method" class="signature"><strong>#success=</strong>(success : UInt64)</a>
+        <a href="#success%3D%28value%3AUInt64%29%3AUInt64-instance-method" class="signature"><strong>#success=</strong>(value : UInt64) : UInt64</a>
         
       </li>
     
@@ -296,6 +323,32 @@
   </div>
 
   
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
 
   
 
@@ -322,23 +375,55 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="failed=(failed:UInt64)-instance-method">
+    <div class="entry-detail" id="failed=(value:UInt64):UInt64-instance-method">
       <div class="signature">
         
-        def <strong>failed=</strong>(failed : UInt64)
+        def <strong>failed=</strong>(value : UInt64) : UInt64
 
-        <a class="method-permalink" href="#failed%3D%28failed%3AUInt64%29-instance-method">#</a>
+        <a class="method-permalink" href="#failed%3D%28value%3AUInt64%29%3AUInt64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="increment_failed:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>increment_failed</strong> : Nil
+
+        <a class="method-permalink" href="#increment_failed%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="increment_success:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>increment_success</strong> : Nil
+
+        <a class="method-permalink" href="#increment_success%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -354,23 +439,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="success=(success:UInt64)-instance-method">
+    <div class="entry-detail" id="success=(value:UInt64):UInt64-instance-method">
       <div class="signature">
         
-        def <strong>success=</strong>(success : UInt64)
+        def <strong>success=</strong>(value : UInt64) : UInt64
 
-        <a class="method-permalink" href="#success%3D%28success%3AUInt64%29-instance-method">#</a>
+        <a class="method-permalink" href="#success%3D%28value%3AUInt64%29%3AUInt64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>

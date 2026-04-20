@@ -213,8 +213,8 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L69" target="_blank">
-        read_until.cr
+      <a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L44" target="_blank">
+        read_until/stats.cr
       </a>
     
     <br/>
@@ -264,12 +264,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#avg_lag_samples%3AFloat64-instance-method" class="signature"><strong>#avg_lag_samples</strong> : Float64</a>
+        <a href="#add_bytes_received%28bytes%3AUInt64%29%3ANil-instance-method" class="signature"><strong>#add_bytes_received</strong>(bytes : UInt64) : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#avg_lag_samples%3D%28avg_lag_samples%3AFloat64%29-instance-method" class="signature"><strong>#avg_lag_samples=</strong>(avg_lag_samples : Float64)</a>
+        <a href="#avg_lag_samples%3AFloat64-instance-method" class="signature"><strong>#avg_lag_samples</strong> : Float64</a>
         
       </li>
     
@@ -279,7 +279,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#bytes_received%3D%28bytes_received%3AUInt64%29-instance-method" class="signature"><strong>#bytes_received=</strong>(bytes_received : UInt64)</a>
+        <a href="#increment_reads_seen%3ANil-instance-method" class="signature"><strong>#increment_reads_seen</strong> : Nil</a>
         
       </li>
     
@@ -299,7 +299,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#reads_seen%3D%28reads_seen%3AUInt64%29-instance-method" class="signature"><strong>#reads_seen=</strong>(reads_seen : UInt64)</a>
+        <a href="#record_progress%28samples_since_start%3AUInt64%2Cseconds_since_start%3AFloat64%29%3ANil-instance-method" class="signature"><strong>#record_progress</strong>(samples_since_start : UInt64, seconds_since_start : Float64) : Nil</a>
         
       </li>
     
@@ -309,17 +309,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#responses_seen%3D%28responses_seen%3AUInt64%29-instance-method" class="signature"><strong>#responses_seen=</strong>(responses_seen : UInt64)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#samples_behind%3AUInt64-instance-method" class="signature"><strong>#samples_behind</strong> : UInt64</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#samples_behind%3D%28samples_behind%3AUInt64%29-instance-method" class="signature"><strong>#samples_behind=</strong>(samples_behind : UInt64)</a>
         
       </li>
     
@@ -329,17 +319,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#samples_since_start%3D%28samples_since_start%3AUInt64%29-instance-method" class="signature"><strong>#samples_since_start=</strong>(samples_since_start : UInt64)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#seconds_since_start%3AFloat64-instance-method" class="signature"><strong>#seconds_since_start</strong> : Float64</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#seconds_since_start%3D%28seconds_since_start%3AFloat64%29-instance-method" class="signature"><strong>#seconds_since_start=</strong>(seconds_since_start : Float64)</a>
         
       </li>
     
@@ -398,7 +378,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -430,7 +410,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L45" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_bytes_received(bytes:UInt64):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>add_bytes_received</strong>(bytes : UInt64) : Nil
+
+        <a class="method-permalink" href="#add_bytes_received%28bytes%3AUInt64%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -446,23 +442,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L77" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="avg_lag_samples=(avg_lag_samples:Float64)-instance-method">
-      <div class="signature">
-        
-        def <strong>avg_lag_samples=</strong>(avg_lag_samples : Float64)
-
-        <a class="method-permalink" href="#avg_lag_samples%3D%28avg_lag_samples%3AFloat64%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -478,23 +458,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="bytes_received=(bytes_received:UInt64)-instance-method">
+    <div class="entry-detail" id="increment_reads_seen:Nil-instance-method">
       <div class="signature">
         
-        def <strong>bytes_received=</strong>(bytes_received : UInt64)
+        def <strong>increment_reads_seen</strong> : Nil
 
-        <a class="method-permalink" href="#bytes_received%3D%28bytes_received%3AUInt64%29-instance-method">#</a>
+        <a class="method-permalink" href="#increment_reads_seen%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L104" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -510,7 +490,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L78" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L88" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -526,7 +506,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -542,23 +522,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="reads_seen=(reads_seen:UInt64)-instance-method">
+    <div class="entry-detail" id="record_progress(samples_since_start:UInt64,seconds_since_start:Float64):Nil-instance-method">
       <div class="signature">
         
-        def <strong>reads_seen=</strong>(reads_seen : UInt64)
+        def <strong>record_progress</strong>(samples_since_start : UInt64, seconds_since_start : Float64) : Nil
 
-        <a class="method-permalink" href="#reads_seen%3D%28reads_seen%3AUInt64%29-instance-method">#</a>
+        <a class="method-permalink" href="#record_progress%28samples_since_start%3AUInt64%2Cseconds_since_start%3AFloat64%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -574,23 +554,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L73" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="responses_seen=(responses_seen:UInt64)-instance-method">
-      <div class="signature">
-        
-        def <strong>responses_seen=</strong>(responses_seen : UInt64)
-
-        <a class="method-permalink" href="#responses_seen%3D%28responses_seen%3AUInt64%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -606,23 +570,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L76" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="samples_behind=(samples_behind:UInt64)-instance-method">
-      <div class="signature">
-        
-        def <strong>samples_behind=</strong>(samples_behind : UInt64)
-
-        <a class="method-permalink" href="#samples_behind%3D%28samples_behind%3AUInt64%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -638,23 +586,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L74" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="samples_since_start=(samples_since_start:UInt64)-instance-method">
-      <div class="signature">
-        
-        def <strong>samples_since_start=</strong>(samples_since_start : UInt64)
-
-        <a class="method-permalink" href="#samples_since_start%3D%28samples_since_start%3AUInt64%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -670,23 +602,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L75" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="seconds_since_start=(seconds_since_start:Float64)-instance-method">
-      <div class="signature">
-        
-        def <strong>seconds_since_start=</strong>(seconds_since_start : Float64)
-
-        <a class="method-permalink" href="#seconds_since_start%3D%28seconds_since_start%3AFloat64%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/stats.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>

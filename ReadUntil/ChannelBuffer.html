@@ -213,8 +213,8 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L423" target="_blank">
-        read_until.cr
+      <a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L11" target="_blank">
+        read_until/read_buffer.cr
       </a>
     
     <br/>
@@ -290,6 +290,11 @@
     
       <li class="entry-summary">
         <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#wait_for_read%28timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2Cstop_signal%3AChannel%28Nil%29%7CNil%3Dnil%29%3ABool-instance-method" class="signature"><strong>#wait_for_read</strong>(timeout : Time::Span | Nil = <span class="n">nil</span>, stop_signal : Channel(Nil) | Nil = <span class="n">nil</span>) : Bool</a>
         
       </li>
     
@@ -395,7 +400,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L428" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -427,7 +432,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L424" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -443,7 +448,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L477" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -459,7 +464,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L425" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -475,7 +480,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L457" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -491,7 +496,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L435" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -507,7 +512,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L426" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -523,7 +528,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L484" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="wait_for_read(timeout:Time::Span|Nil=nil,stop_signal:Channel(Nil)|Nil=nil):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>wait_for_read</strong>(timeout : Time::Span | Nil = <span class="n">nil</span>, stop_signal : Channel(Nil) | Nil = <span class="n">nil</span>) : Bool
+
+        <a class="method-permalink" href="#wait_for_read%28timeout%3ATime%3A%3ASpan%7CNil%3Dnil%2Cstop_signal%3AChannel%28Nil%29%7CNil%3Dnil%29%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read_buffer.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -188,6 +188,20 @@
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Live read chunk with signal data and metadata.
+Signal access is guarded by format validation to ensure consistency.
+Note: Read number tracking is reserved for future implementation;
+actions currently require explicit read id.</p>
+
 
 
 
@@ -213,8 +227,8 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L296" target="_blank">
-        read_until.cr
+      <a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L17" target="_blank">
+        read_until/read.cr
       </a>
     
     <br/>
@@ -236,7 +250,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28channel%3AInt32%2Cid%3AString%2Cnumber%3AUInt32%7CNil%3Dnil%2Cstart_sample%3AUInt64%7CNil%3Dnil%2Cchunk_start_sample%3AUInt64%3D0_u64%2Cchunk_length%3AUInt64%3D0_u64%2Cclassification_ids%3AArray%28Int32%29%3D%5B%5DofInt32%2Craw_bytes%3ABytes%3DBytes.empty%2Cmedian_before%3AFloat32%3D0.0_f32%2Cmedian%3AFloat32%3D0.0_f32%2Cregistry%3AClassificationRegistry%3DClassificationRegistry.default%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, id : String, number : UInt32 | Nil = <span class="n">nil</span>, start_sample : UInt64 | Nil = <span class="n">nil</span>, chunk_start_sample : UInt64 = <span class="n">0_u64</span>, chunk_length : UInt64 = <span class="n">0_u64</span>, classification_ids : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, raw_bytes : Bytes = <span class="t">Bytes</span>.empty, median_before : Float32 = <span class="n">0.0_f32</span>, median : Float32 = <span class="n">0.0_f32</span>, registry : ClassificationRegistry = <span class="t">ClassificationRegistry</span>.default)</a>
+        <a href="#new%28channel%3AInt32%2Cid%3AString%2Cstart_sample%3AUInt64%7CNil%3Dnil%2Cchunk_start_sample%3AUInt64%3D0_u64%2Cchunk_length%3AUInt64%3D0_u64%2Cclassification_ids%3AArray%28Int32%29%3D%5B%5DofInt32%2Craw_bytes%3ABytes%3DBytes.empty%2Cmedian_before%3AFloat32%3D0.0_f32%2Cmedian%3AFloat32%3D0.0_f32%2Cregistry%3AClassificationRegistry%3DClassificationRegistry.default%2Csignal_format%3ASignalFormat%3DSignalFormat.new%2Craw_data_kind%3ARawDataKind%3DRawDataKind%3A%3ACalibrated%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, id : String, start_sample : UInt64 | Nil = <span class="n">nil</span>, chunk_start_sample : UInt64 = <span class="n">0_u64</span>, chunk_length : UInt64 = <span class="n">0_u64</span>, classification_ids : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, raw_bytes : Bytes = <span class="t">Bytes</span>.empty, median_before : Float32 = <span class="n">0.0_f32</span>, median : Float32 = <span class="n">0.0_f32</span>, registry : ClassificationRegistry = <span class="t">ClassificationRegistry</span>.default, signal_format : SignalFormat = <span class="t">SignalFormat</span>.new, raw_data_kind : RawDataKind = <span class="t">RawDataKind</span><span class="t">::</span><span class="t">Calibrated</span>)</a>
         
       </li>
     
@@ -329,17 +343,17 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#number%3AUInt32%7CNil-instance-method" class="signature"><strong>#number</strong> : UInt32 | Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#raw_bytes%3ABytes-instance-method" class="signature"><strong>#raw_bytes</strong> : Bytes</a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#raw_data%3ABytes-instance-method" class="signature"><strong>#raw_data</strong> : Bytes</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#raw_data_kind%3ARawDataKind-instance-method" class="signature"><strong>#raw_data_kind</strong> : RawDataKind</a>
         
       </li>
     
@@ -355,6 +369,11 @@
     
       <li class="entry-summary">
         <a href="#signal%28type%3AFloat32.class%29%3ASlice%28Float32%29-instance-method" class="signature"><strong>#signal</strong>(type : <span class="t">Float32</span>.<span class="k">class</span>) : Slice(Float32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signal_format%3ASignalFormat-instance-method" class="signature"><strong>#signal_format</strong> : SignalFormat</a>
         
       </li>
     
@@ -417,18 +436,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(channel:Int32,id:String,number:UInt32|Nil=nil,start_sample:UInt64|Nil=nil,chunk_start_sample:UInt64=0_u64,chunk_length:UInt64=0_u64,classification_ids:Array(Int32)=[]ofInt32,raw_bytes:Bytes=Bytes.empty,median_before:Float32=0.0_f32,median:Float32=0.0_f32,registry:ClassificationRegistry=ClassificationRegistry.default)-class-method">
+    <div class="entry-detail" id="new(channel:Int32,id:String,start_sample:UInt64|Nil=nil,chunk_start_sample:UInt64=0_u64,chunk_length:UInt64=0_u64,classification_ids:Array(Int32)=[]ofInt32,raw_bytes:Bytes=Bytes.empty,median_before:Float32=0.0_f32,median:Float32=0.0_f32,registry:ClassificationRegistry=ClassificationRegistry.default,signal_format:SignalFormat=SignalFormat.new,raw_data_kind:RawDataKind=RawDataKind::Calibrated)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(channel : Int32, id : String, number : UInt32 | Nil = <span class="n">nil</span>, start_sample : UInt64 | Nil = <span class="n">nil</span>, chunk_start_sample : UInt64 = <span class="n">0_u64</span>, chunk_length : UInt64 = <span class="n">0_u64</span>, classification_ids : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, raw_bytes : Bytes = <span class="t">Bytes</span>.empty, median_before : Float32 = <span class="n">0.0_f32</span>, median : Float32 = <span class="n">0.0_f32</span>, registry : <a href="../ReadUntil/ClassificationRegistry.html">ClassificationRegistry</a> = <span class="t">ClassificationRegistry</span>.default)
+        def self.<strong>new</strong>(channel : Int32, id : String, start_sample : UInt64 | Nil = <span class="n">nil</span>, chunk_start_sample : UInt64 = <span class="n">0_u64</span>, chunk_length : UInt64 = <span class="n">0_u64</span>, classification_ids : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, raw_bytes : Bytes = <span class="t">Bytes</span>.empty, median_before : Float32 = <span class="n">0.0_f32</span>, median : Float32 = <span class="n">0.0_f32</span>, registry : <a href="../ReadUntil/ClassificationRegistry.html">ClassificationRegistry</a> = <span class="t">ClassificationRegistry</span>.default, signal_format : <a href="../ReadUntil/SignalFormat.html">SignalFormat</a> = <span class="t">SignalFormat</span>.new, raw_data_kind : <a href="../ReadUntil/RawDataKind.html">RawDataKind</a> = <span class="t">RawDataKind</span><span class="t">::</span><span class="t">Calibrated</span>)
 
-        <a class="method-permalink" href="#new%28channel%3AInt32%2Cid%3AString%2Cnumber%3AUInt32%7CNil%3Dnil%2Cstart_sample%3AUInt64%7CNil%3Dnil%2Cchunk_start_sample%3AUInt64%3D0_u64%2Cchunk_length%3AUInt64%3D0_u64%2Cclassification_ids%3AArray%28Int32%29%3D%5B%5DofInt32%2Craw_bytes%3ABytes%3DBytes.empty%2Cmedian_before%3AFloat32%3D0.0_f32%2Cmedian%3AFloat32%3D0.0_f32%2Cregistry%3AClassificationRegistry%3DClassificationRegistry.default%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28channel%3AInt32%2Cid%3AString%2Cstart_sample%3AUInt64%7CNil%3Dnil%2Cchunk_start_sample%3AUInt64%3D0_u64%2Cchunk_length%3AUInt64%3D0_u64%2Cclassification_ids%3AArray%28Int32%29%3D%5B%5DofInt32%2Craw_bytes%3ABytes%3DBytes.empty%2Cmedian_before%3AFloat32%3D0.0_f32%2Cmedian%3AFloat32%3D0.0_f32%2Cregistry%3AClassificationRegistry%3DClassificationRegistry.default%2Csignal_format%3ASignalFormat%3DSignalFormat.new%2Craw_data_kind%3ARawDataKind%3DRawDataKind%3A%3ACalibrated%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L312" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -460,7 +479,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L351" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -476,7 +495,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L381" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -492,7 +511,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L297" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -508,7 +527,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L327" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L52" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -524,7 +543,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L302" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -540,7 +559,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L301" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -556,7 +575,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L303" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -572,7 +591,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L339" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -588,7 +607,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L335" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -604,7 +623,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L355" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -620,7 +639,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L359" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -636,7 +655,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L298" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -652,7 +671,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L306" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -668,23 +687,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L305" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="number:UInt32|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>number</strong> : UInt32 | Nil
-
-        <a class="method-permalink" href="#number%3AUInt32%7CNil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L299" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -700,7 +703,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L304" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -716,7 +719,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L331" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="raw_data_kind:RawDataKind-instance-method">
+      <div class="signature">
+        
+        def <strong>raw_data_kind</strong> : <a href="../ReadUntil/RawDataKind.html">RawDataKind</a>
+
+        <a class="method-permalink" href="#raw_data_kind%3ARawDataKind-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -732,7 +751,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L343" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -748,7 +767,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L363" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L88" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -764,7 +783,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L372" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="signal_format:SignalFormat-instance-method">
+      <div class="signature">
+        
+        def <strong>signal_format</strong> : <a href="../ReadUntil/SignalFormat.html">SignalFormat</a>
+
+        <a class="method-permalink" href="#signal_format%3ASignalFormat-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -780,7 +815,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L300" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -796,7 +831,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L347" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L72" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -812,7 +847,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1d646a2062a9aac7024b0f4ba812989bbd6e471b/src/read_until.cr#L385" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/7726729048ee5fe342ffc363691fb9707ff6854b/src/read_until/read.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
