@@ -1,4 +1,5 @@
 require "minknow"
+require "log"
 require "./read_until/version"
 
 module ReadUntil
@@ -72,9 +73,19 @@ module ReadUntil
     property responses_seen : UInt64 = 0_u64
     property samples_since_start : UInt64 = 0_u64
     property seconds_since_start : Float64 = 0.0_f64
+    property samples_behind : UInt64 = 0_u64
+    property avg_lag_samples : Float64 = 0.0_f64
+    getter lag_measurements : UInt64 = 0_u64
 
     def initialize
       @actions = ActionStats.new
+    end
+
+    def observe_lag(samples : UInt64) : Nil
+      @samples_behind = samples
+      @lag_measurements += 1
+      n = @lag_measurements.to_f64
+      @avg_lag_samples += (samples.to_f64 - @avg_lag_samples) / n
     end
   end
 
@@ -367,6 +378,14 @@ module ReadUntil
       Slice.new(decoded.to_unsafe, decoded.size)
     end
 
+    def calibrated_signal : Slice(Float32)
+      signal(Float32)
+    end
+
+    def uncalibrated_signal : Slice(Int16)
+      signal(Int16)
+    end
+
     private def decode_int16_le(bytes : Bytes) : Array(Int16)
       raise ArgumentError.new("raw_data size must be divisible by 2 for Int16") unless bytes.size.divisible_by?(2)
       output = Array(Int16).new(bytes.size // 2)
@@ -468,6 +487,8 @@ module ReadUntil
   end
 
   class Session
+    private Log = ::Log.for(self)
+
     getter config : Config
     getter stats : Stats
     getter progress : AcquisitionProgress?
@@ -522,8 +543,16 @@ module ReadUntil
     def close : Nil
       @running.set(0)
       if bidi = @bidi
-        bidi.close_send rescue nil
-        bidi.cancel rescue nil
+        begin
+          bidi.close_send
+        rescue ex
+          Log.debug(exception: ex) { "failed to close send side of live reads stream" }
+        end
+        begin
+          bidi.cancel
+        rescue ex
+          Log.debug(exception: ex) { "failed to cancel live reads stream" }
+        end
       end
       @buffer.clear
       @action_mutex.synchronize do
@@ -614,7 +643,13 @@ module ReadUntil
 
     private def enqueue_action(read_ref : ReadRef, kind : ActionKind, duration : Time::Span? = nil) : String
       read_id = read_ref.id
-      raise ArgumentError.new("read reference must include read id") unless read_id
+      unless read_id
+        if read_ref.number
+          Log.warn { "ReadRef#number is not supported for live-read actions; provide read id" }
+          raise ArgumentError.new("read reference number is not supported for actions; provide read id")
+        end
+        raise ArgumentError.new("read reference must include read id")
+      end
 
       action_id = next_action_id
       proto_action = case kind
@@ -623,6 +658,8 @@ module ReadUntil
                        Minknow::DataService.unblock_action(action_id, read_ref.channel.to_u32, read_id, action_duration)
                      when ActionKind::Stop
                        Minknow::DataService.stop_action(action_id, read_ref.channel.to_u32, read_id)
+                     else
+                       raise ArgumentError.new("unknown action kind: #{kind}")
                      end
 
       @action_mutex.synchronize do
@@ -637,7 +674,8 @@ module ReadUntil
         break unless running?
         process_response(response)
       end
-    rescue
+    rescue ex
+      Log.error(exception: ex) { "receive loop crashed" }
       @running.set(0)
     end
 
@@ -658,7 +696,8 @@ module ReadUntil
         sleep_for = config.action_throttle - elapsed
         sleep(sleep_for) if sleep_for > 0.seconds
       end
-    rescue
+    rescue ex
+      Log.error(exception: ex) { "send loop crashed" }
       @running.set(0)
     end
 
@@ -704,6 +743,11 @@ module ReadUntil
           median: data.median,
           registry: @registry,
         )
+
+        read_end = data.chunk_start_sample + data.chunk_length
+        lag = response.samples_since_start > read_end ? response.samples_since_start - read_end : 0_u64
+        stats.observe_lag(lag)
+
         @buffer.push(read)
         stats.bytes_received += read.raw_bytes.size.to_u64
         stats.reads_seen += 1
@@ -747,6 +791,8 @@ module ReadUntil
   end
 
   class Client
+    private Log = ::Log.for(self)
+
     getter connection : Minknow::Connection
     getter classifications : ClassificationRegistry
     getter signal_format : SignalFormat
@@ -764,7 +810,8 @@ module ReadUntil
 
     private def fetch_signal_format : SignalFormat
       SignalFormat.from_data_types(connection.data.data_types)
-    rescue
+    rescue ex
+      Log.warn(exception: ex) { "failed to fetch signal format from device; falling back to defaults" }
       SignalFormat.new
     end
 

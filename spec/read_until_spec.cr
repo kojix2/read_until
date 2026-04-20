@@ -53,6 +53,29 @@ describe ReadUntil::Read do
     signal[0].should be_close(1.5_f32, 0.0001)
     signal[1].should be_close(-2.25_f32, 0.0001)
   end
+
+  it "exposes calibrated and uncalibrated signal sugar" do
+    raw_i16 = Bytes[0x01, 0x00, 0x02, 0x00]
+    read_i16 = ReadUntil::Read.new(channel: 1, id: "ri16", raw_bytes: raw_i16)
+    read_i16.uncalibrated_signal.to_a.should eq([1_i16, 2_i16])
+
+    io = IO::Memory.new
+    IO::ByteFormat::LittleEndian.encode(1.5_f32, io)
+    read_f32 = ReadUntil::Read.new(channel: 1, id: "rf32", raw_bytes: io.to_slice)
+    read_f32.calibrated_signal[0].should be_close(1.5_f32, 0.0001)
+  end
+end
+
+describe ReadUntil::Stats do
+  it "tracks lag samples and moving average" do
+    stats = ReadUntil::Stats.new
+    stats.observe_lag(10_u64)
+    stats.observe_lag(20_u64)
+
+    stats.samples_behind.should eq(20_u64)
+    stats.lag_measurements.should eq(2_u64)
+    stats.avg_lag_samples.should be_close(15.0_f64, 0.0001)
+  end
 end
 
 describe ReadUntil::Prefilter do
@@ -209,5 +232,19 @@ describe ReadUntil::Client do
     session.config.channels.should eq(10..20)
     session.one_chunk?.should be_false
     session.config.prefilter.allow?([65]).should be_true
+  end
+
+  it "raises a clear error for number-only ReadRef actions" do
+    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
+    manager = Minknow::Manager.new(config)
+    position = Minknow::FlowCellPosition.new("X6", "localhost", 9602)
+    connection = manager.connect(position)
+
+    client = ReadUntil::Client.new(connection)
+    session = client.new_session
+
+    expect_raises(ArgumentError, /number is not supported/) do
+      session.stop(ReadUntil::ReadRef.new(1, nil, 42_u32))
+    end
   end
 end
