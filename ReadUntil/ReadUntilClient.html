@@ -62,13 +62,8 @@
       
         <ul>
   
-  <li class=" " data-id="read_until/ReadUntil/Action" data-name="readuntil::action">
-      <a href="../ReadUntil/Action.html">Action</a>
-      
-    </li>
-  
-  <li class=" " data-id="read_until/ReadUntil/ActionKind" data-name="readuntil::actionkind">
-      <a href="../ReadUntil/ActionKind.html">ActionKind</a>
+  <li class=" " data-id="read_until/ReadUntil/ReadCache" data-name="readuntil::readcache">
+      <a href="../ReadUntil/ReadCache.html">ReadCache</a>
       
     </li>
   
@@ -82,8 +77,8 @@
       
     </li>
   
-  <li class=" " data-id="read_until/ReadUntil/StreamSetup" data-name="readuntil::streamsetup">
-      <a href="../ReadUntil/StreamSetup.html">StreamSetup</a>
+  <li class=" " data-id="read_until/ReadUntil/StreamOptions" data-name="readuntil::streamoptions">
+      <a href="../ReadUntil/StreamOptions.html">StreamOptions</a>
       
     </li>
   
@@ -113,6 +108,25 @@
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Live-reads client for MinKNOW adaptive sampling.</p>
+<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">ReadUntil</span><span class="t">::</span><span class="t">ReadUntilClient</span>.new(connection: conn)
+client.run <span class="k">do</span>
+  <span class="k">while</span> client.running?
+    client.read_chunks(<span class="n">10</span>).each <span class="k">do</span> <span class="o">|</span>channel, chunk<span class="o">|</span>
+      client.unblock(channel, chunk.id)
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
 
 
 
@@ -138,7 +152,7 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L26" target="_blank">
+      <a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L133" target="_blank">
         read_until.cr
       </a>
     
@@ -146,6 +160,25 @@
   
 
 
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="THROTTLE">
+        <strong>THROTTLE</strong> = <code><span class="n">0.001</span></code>
+      </dt>
+      
+    
+  </dl>
 
 
 
@@ -161,7 +194,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28connection%3AMinknow%3A%3AConnection%7CNil%3Dnil%2Csetup%3AStreamSetup%3DStreamSetup.new%29-class-method" class="signature"><strong>.new</strong>(connection : Minknow::Connection | Nil = <span class="n">nil</span>, setup : StreamSetup = <span class="t">StreamSetup</span>.new)</a>
+        <a href="#new%28connection%3AMinknow%3A%3AConnection%2Coptions%3AStreamOptions%3DStreamOptions.new%2Ccache_size%3AInt32%3D512%29-class-method" class="signature"><strong>.new</strong>(connection : Minknow::Connection, options : StreamOptions = <span class="t">StreamOptions</span>.new, cache_size : Int32 = <span class="n">512</span>)</a>
         
       </li>
     
@@ -184,37 +217,51 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#connection%3AMinknow%3A%3AConnection%7CNil-instance-method" class="signature"><strong>#connection</strong> : Minknow::Connection | Nil</a>
+        <a href="#connection%3AMinknow%3A%3AConnection-instance-method" class="signature"><strong>#connection</strong> : Minknow::Connection</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#drain_actions%3AArray%28Action%29-instance-method" class="signature"><strong>#drain_actions</strong> : Array(Action)</a>
+        <a href="#endpoint%3AString-instance-method" class="signature"><strong>#endpoint</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#endpoint%3AString%7CNil-instance-method" class="signature"><strong>#endpoint</strong> : String | Nil</a>
+        <a href="#missed_chunks%3AInt32-instance-method" class="signature"><strong>#missed_chunks</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#enqueue_stop_receiving%28channel%3AInt32%2Cread_id%3AString%29%3AAction-instance-method" class="signature"><strong>#enqueue_stop_receiving</strong>(channel : Int32, read_id : String) : Action</a>
+        <a href="#missed_reads%3AInt32-instance-method" class="signature"><strong>#missed_reads</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#enqueue_unblock%28channel%3AInt32%2Cread_id%3AString%29%3AAction-instance-method" class="signature"><strong>#enqueue_unblock</strong>(channel : Int32, read_id : String) : Action</a>
+        <a href="#options%3AStreamOptions-instance-method" class="signature"><strong>#options</strong> : StreamOptions</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ingest%28chunk%3AReadChunk%29%3AReadChunk-instance-method" class="signature"><strong>#ingest</strong>(chunk : ReadChunk) : ReadChunk</a>
+        <a href="#queue_length%3AInt32-instance-method" class="signature"><strong>#queue_length</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#latest_read%28channel%3AInt32%29%3AReadChunk%7CNil-instance-method" class="signature"><strong>#latest_read</strong>(channel : Int32) : ReadChunk | Nil</a>
+        <a href="#read_cache%3AReadCache-instance-method" class="signature"><strong>#read_cache</strong> : ReadCache</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_chunks%28count%3AInt32%3D1%2Cnewest_first%3ABool%3Dtrue%29%3AArray%28Tuple%28Int32%2CReadChunk%29%29-instance-method" class="signature"><strong>#read_chunks</strong>(count : Int32 = <span class="n">1</span>, newest_first : Bool = <span class="n">true</span>) : Array(Tuple(Int32, ReadChunk))</a>
+        
+          <div class="summary"><p>Removes and returns up to <em>count</em> chunks from the cache (newest-first).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#run%28%26%3A-%3ENil%29%3ANil-instance-method" class="signature"><strong>#run</strong>(& :  -> Nil) : Nil</a>
+        
+          <div class="summary"><p>Opens the bidirectional live-reads stream, starts background fibers for receiving responses and sending batched actions, then yields to the caller's analysis block.</p></div>
         
       </li>
     
@@ -224,17 +271,23 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#setup%3AStreamSetup-instance-method" class="signature"><strong>#setup</strong> : StreamSetup</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#start%3ANil-instance-method" class="signature"><strong>#start</strong> : Nil</a>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#stop%3ANil-instance-method" class="signature"><strong>#stop</strong> : Nil</a>
+        
+          <div class="summary"><p>Signals the stream to stop without blocking.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stop_receiving%28channel%3AInt32%2Cread_id%3AString%29%3ANil-instance-method" class="signature"><strong>#stop_receiving</strong>(channel : Int32, read_id : String) : Nil</a>
+        
+          <div class="summary"><p>Queues a stop-further-data request for <em>read_id</em> on <em>channel</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unblock%28channel%3AInt32%2Cread_id%3AString%2Cduration%3AFloat64%3Doptions.unblock_duration%29%3ANil-instance-method" class="signature"><strong>#unblock</strong>(channel : Int32, read_id : String, duration : Float64 = options.unblock_duration) : Nil</a>
+        
+          <div class="summary"><p>Queues an unblock request for <em>read_id</em> on <em>channel</em>.</p></div>
         
       </li>
     
@@ -282,18 +335,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(connection:Minknow::Connection|Nil=nil,setup:StreamSetup=StreamSetup.new)-class-method">
+    <div class="entry-detail" id="new(connection:Minknow::Connection,options:StreamOptions=StreamOptions.new,cache_size:Int32=512)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(connection : Minknow::Connection | Nil = <span class="n">nil</span>, setup : <a href="../ReadUntil/StreamSetup.html">StreamSetup</a> = <span class="t">StreamSetup</span>.new)
+        def self.<strong>new</strong>(connection : Minknow::Connection, options : <a href="../ReadUntil/StreamOptions.html">StreamOptions</a> = <span class="t">StreamOptions</span>.new, cache_size : Int32 = <span class="n">512</span>)
 
-        <a class="method-permalink" href="#new%28connection%3AMinknow%3A%3AConnection%7CNil%3Dnil%2Csetup%3AStreamSetup%3DStreamSetup.new%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28connection%3AMinknow%3A%3AConnection%2Coptions%3AStreamOptions%3DStreamOptions.new%2Ccache_size%3AInt32%3D512%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L146" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -314,114 +367,159 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="connection:Minknow::Connection|Nil-instance-method">
+    <div class="entry-detail" id="connection:Minknow::Connection-instance-method">
       <div class="signature">
         
-        def <strong>connection</strong> : Minknow::Connection | Nil
+        def <strong>connection</strong> : Minknow::Connection
 
-        <a class="method-permalink" href="#connection%3AMinknow%3A%3AConnection%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#connection%3AMinknow%3A%3AConnection-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L136" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="drain_actions:Array(Action)-instance-method">
+    <div class="entry-detail" id="endpoint:String-instance-method">
       <div class="signature">
         
-        def <strong>drain_actions</strong> : Array(<a href="../ReadUntil/Action.html">Action</a>)
+        def <strong>endpoint</strong> : String
 
-        <a class="method-permalink" href="#drain_actions%3AArray%28Action%29-instance-method">#</a>
+        <a class="method-permalink" href="#endpoint%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="endpoint:String|Nil-instance-method">
+    <div class="entry-detail" id="missed_chunks:Int32-instance-method">
       <div class="signature">
         
-        def <strong>endpoint</strong> : String | Nil
+        def <strong>missed_chunks</strong> : Int32
 
-        <a class="method-permalink" href="#endpoint%3AString%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#missed_chunks%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L175" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="enqueue_stop_receiving(channel:Int32,read_id:String):Action-instance-method">
+    <div class="entry-detail" id="missed_reads:Int32-instance-method">
       <div class="signature">
         
-        def <strong>enqueue_stop_receiving</strong>(channel : Int32, read_id : String) : <a href="../ReadUntil/Action.html">Action</a>
+        def <strong>missed_reads</strong> : Int32
 
-        <a class="method-permalink" href="#enqueue_stop_receiving%28channel%3AInt32%2Cread_id%3AString%29%3AAction-instance-method">#</a>
+        <a class="method-permalink" href="#missed_reads%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L68" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L171" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="enqueue_unblock(channel:Int32,read_id:String):Action-instance-method">
+    <div class="entry-detail" id="options:StreamOptions-instance-method">
       <div class="signature">
         
-        def <strong>enqueue_unblock</strong>(channel : Int32, read_id : String) : <a href="../ReadUntil/Action.html">Action</a>
+        def <strong>options</strong> : <a href="../ReadUntil/StreamOptions.html">StreamOptions</a>
 
-        <a class="method-permalink" href="#enqueue_unblock%28channel%3AInt32%2Cread_id%3AString%29%3AAction-instance-method">#</a>
+        <a class="method-permalink" href="#options%3AStreamOptions-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L137" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="ingest(chunk:ReadChunk):ReadChunk-instance-method">
+    <div class="entry-detail" id="queue_length:Int32-instance-method">
       <div class="signature">
         
-        def <strong>ingest</strong>(chunk : <a href="../ReadUntil/ReadChunk.html">ReadChunk</a>) : <a href="../ReadUntil/ReadChunk.html">ReadChunk</a>
+        def <strong>queue_length</strong> : Int32
 
-        <a class="method-permalink" href="#ingest%28chunk%3AReadChunk%29%3AReadChunk-instance-method">#</a>
+        <a class="method-permalink" href="#queue_length%3AInt32-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="latest_read(channel:Int32):ReadChunk|Nil-instance-method">
+    <div class="entry-detail" id="read_cache:ReadCache-instance-method">
       <div class="signature">
         
-        def <strong>latest_read</strong>(channel : Int32) : <a href="../ReadUntil/ReadChunk.html">ReadChunk</a> | Nil
+        def <strong>read_cache</strong> : <a href="../ReadUntil/ReadCache.html">ReadCache</a>
 
-        <a class="method-permalink" href="#latest_read%28channel%3AInt32%29%3AReadChunk%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#read_cache%3AReadCache-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_chunks(count:Int32=1,newest_first:Bool=true):Array(Tuple(Int32,ReadChunk))-instance-method">
+      <div class="signature">
+        
+        def <strong>read_chunks</strong>(count : Int32 = <span class="n">1</span>, newest_first : Bool = <span class="n">true</span>) : Array(Tuple(Int32, <a href="../ReadUntil/ReadChunk.html">ReadChunk</a>))
+
+        <a class="method-permalink" href="#read_chunks%28count%3AInt32%3D1%2Cnewest_first%3ABool%3Dtrue%29%3AArray%28Tuple%28Int32%2CReadChunk%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Removes and returns up to <em>count</em> chunks from the cache (newest-first).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L224" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="run(&amp;:-&gt;Nil):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>run</strong>(& :  -> Nil) : Nil
+
+        <a class="method-permalink" href="#run%28%26%3A-%3ENil%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Opens the bidirectional live-reads stream, starts background fibers
+for receiving responses and sending batched actions, then yields to
+the caller's analysis block.  Stops and cleans up when the block returns
+or raises.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -437,39 +535,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L51" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="setup:StreamSetup-instance-method">
-      <div class="signature">
-        
-        def <strong>setup</strong> : <a href="../ReadUntil/StreamSetup.html">StreamSetup</a>
-
-        <a class="method-permalink" href="#setup%3AStreamSetup-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L28" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="start:Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>start</strong> : Nil
-
-        <a class="method-permalink" href="#start%3ANil-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L43" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -482,10 +548,57 @@
         <a class="method-permalink" href="#stop%3ANil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Signals the stream to stop without blocking.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L219" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stop_receiving(channel:Int32,read_id:String):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>stop_receiving</strong>(channel : Int32, read_id : String) : Nil
+
+        <a class="method-permalink" href="#stop_receiving%28channel%3AInt32%2Cread_id%3AString%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Queues a stop-further-data request for <em>read_id</em> on <em>channel</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L185" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unblock(channel:Int32,read_id:String,duration:Float64=options.unblock_duration):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>unblock</strong>(channel : Int32, read_id : String, duration : Float64 = options.unblock_duration) : Nil
+
+        <a class="method-permalink" href="#unblock%28channel%3AInt32%2Cread_id%3AString%2Cduration%3AFloat64%3Doptions.unblock_duration%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Queues an unblock request for <em>read_id</em> on <em>channel</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L180" target="_blank">View source</a>]
         
       </div>
     </div>

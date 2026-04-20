@@ -62,13 +62,8 @@
       
         <ul>
   
-  <li class=" " data-id="read_until/ReadUntil/Action" data-name="readuntil::action">
-      <a href="../ReadUntil/Action.html">Action</a>
-      
-    </li>
-  
-  <li class=" " data-id="read_until/ReadUntil/ActionKind" data-name="readuntil::actionkind">
-      <a href="../ReadUntil/ActionKind.html">ActionKind</a>
+  <li class=" " data-id="read_until/ReadUntil/ReadCache" data-name="readuntil::readcache">
+      <a href="../ReadUntil/ReadCache.html">ReadCache</a>
       
     </li>
   
@@ -82,8 +77,8 @@
       
     </li>
   
-  <li class=" " data-id="read_until/ReadUntil/StreamSetup" data-name="readuntil::streamsetup">
-      <a href="../ReadUntil/StreamSetup.html">StreamSetup</a>
+  <li class=" " data-id="read_until/ReadUntil/StreamOptions" data-name="readuntil::streamoptions">
+      <a href="../ReadUntil/StreamOptions.html">StreamOptions</a>
       
     </li>
   
@@ -102,16 +97,29 @@
 <h1 class="type-name">
 
   <span class="kind">
-    struct
+    class
   </span> ReadUntil::<wbr>ReadChunk
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../ReadUntil/ReadChunk.html">ReadUntil::ReadChunk</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../ReadUntil/ReadChunk.html">ReadUntil::ReadChunk</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A single chunk of raw signal data delivered from MinKNOW.</p>
+<p>Field names follow <code>GetLiveReadsResponse::ReadData</code>.
+<code><a href="../ReadUntil/ReadChunk.html#channel%3AInt32-instance-method">#channel</a></code> is the map key from the response, injected by the client.</p>
 
 
 
@@ -138,7 +146,7 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L15" target="_blank">
+      <a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L9" target="_blank">
         read_until.cr
       </a>
     
@@ -161,7 +169,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Cnumber%3AInt32%3D0%2Craw_data%3ABytes%3DBytes.empty%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, number : Int32 = <span class="n">0</span>, raw_data : Bytes = <span class="t">Bytes</span>.empty)</a>
+        <a href="#new%28channel%3AInt32%2Cid%3AString%2Cchunk_start_sample%3AUInt64%3D0_u64%2Cchunk_length%3AUInt64%3D0_u64%2Cchunk_classifications%3AArray%28Int32%29%3D%5B%5DofInt32%2Craw_data%3ABytes%3DBytes.empty%2Cmedian_before%3AFloat32%3D0.0_f32%2Cmedian%3AFloat32%3D0.0_f32%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, id : String, chunk_start_sample : UInt64 = <span class="n">0_u64</span>, chunk_length : UInt64 = <span class="n">0_u64</span>, chunk_classifications : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, raw_data : Bytes = <span class="t">Bytes</span>.empty, median_before : Float32 = <span class="n">0.0_f32</span>, median : Float32 = <span class="n">0.0_f32</span>)</a>
         
       </li>
     
@@ -189,17 +197,32 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
+        <a href="#chunk_classifications%3AArray%28Int32%29-instance-method" class="signature"><strong>#chunk_classifications</strong> : Array(Int32)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cnumber_number%3D%40number%2Craw_data_raw_data%3D%40raw_data%29-instance-method" class="signature"><strong>#copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, number _number = @number, raw_data _raw_data = @raw_data)</a>
+        <a href="#chunk_length%3AUInt64-instance-method" class="signature"><strong>#chunk_length</strong> : UInt64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#number%3AInt32-instance-method" class="signature"><strong>#number</strong> : Int32</a>
+        <a href="#chunk_start_sample%3AUInt64-instance-method" class="signature"><strong>#chunk_start_sample</strong> : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#id%3AString-instance-method" class="signature"><strong>#id</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#median%3AFloat32-instance-method" class="signature"><strong>#median</strong> : Float32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#median_before%3AFloat32-instance-method" class="signature"><strong>#median_before</strong> : Float32</a>
         
       </li>
     
@@ -208,29 +231,11 @@
         
       </li>
     
-      <li class="entry-summary">
-        <a href="#read_id%3AString-instance-method" class="signature"><strong>#read_id</strong> : String</a>
-        
-      </li>
-    
   </ul>
 
 
 
   <div class="methods-inherited">
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
     
       
 
@@ -270,18 +275,18 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(channel:Int32,read_id:String,number:Int32=0,raw_data:Bytes=Bytes.empty)-class-method">
+    <div class="entry-detail" id="new(channel:Int32,id:String,chunk_start_sample:UInt64=0_u64,chunk_length:UInt64=0_u64,chunk_classifications:Array(Int32)=[]ofInt32,raw_data:Bytes=Bytes.empty,median_before:Float32=0.0_f32,median:Float32=0.0_f32)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(channel : Int32, read_id : String, number : Int32 = <span class="n">0</span>, raw_data : Bytes = <span class="t">Bytes</span>.empty)
+        def self.<strong>new</strong>(channel : Int32, id : String, chunk_start_sample : UInt64 = <span class="n">0_u64</span>, chunk_length : UInt64 = <span class="n">0_u64</span>, chunk_classifications : Array(Int32) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span>, raw_data : Bytes = <span class="t">Bytes</span>.empty, median_before : Float32 = <span class="n">0.0_f32</span>, median : Float32 = <span class="n">0.0_f32</span>)
 
-        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Cnumber%3AInt32%3D0%2Craw_data%3ABytes%3DBytes.empty%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28channel%3AInt32%2Cid%3AString%2Cchunk_start_sample%3AUInt64%3D0_u64%2Cchunk_length%3AUInt64%3D0_u64%2Cchunk_classifications%3AArray%28Int32%29%3D%5B%5DofInt32%2Craw_data%3ABytes%3DBytes.empty%2Cmedian_before%3AFloat32%3D0.0_f32%2Cmedian%3AFloat32%3D0.0_f32%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -313,51 +318,103 @@
       <br/>
       <div>
         
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L10" target="_blank">View source</a>]
+        
       </div>
     </div>
   
-    <div class="entry-detail" id="clone-instance-method">
+    <div class="entry-detail" id="chunk_classifications:Array(Int32)-instance-method">
       <div class="signature">
         
-        def <strong>clone</strong>
+        def <strong>chunk_classifications</strong> : Array(Int32)
 
-        <a class="method-permalink" href="#clone-instance-method">#</a>
+        <a class="method-permalink" href="#chunk_classifications%3AArray%28Int32%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="copy_with(channel_channel=@channel,read_id_read_id=@read_id,number_number=@number,raw_data_raw_data=@raw_data)-instance-method">
+    <div class="entry-detail" id="chunk_length:UInt64-instance-method">
       <div class="signature">
         
-        def <strong>copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, number _number = @number, raw_data _raw_data = @raw_data)
+        def <strong>chunk_length</strong> : UInt64
 
-        <a class="method-permalink" href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cnumber_number%3D%40number%2Craw_data_raw_data%3D%40raw_data%29-instance-method">#</a>
+        <a class="method-permalink" href="#chunk_length%3AUInt64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/66ce127acfb2adf31ee2186c2895df494e7003c4/src/read_until.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="number:Int32-instance-method">
+    <div class="entry-detail" id="chunk_start_sample:UInt64-instance-method">
       <div class="signature">
         
-        def <strong>number</strong> : Int32
+        def <strong>chunk_start_sample</strong> : UInt64
 
-        <a class="method-permalink" href="#number%3AInt32-instance-method">#</a>
+        <a class="method-permalink" href="#chunk_start_sample%3AUInt64-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="id:String-instance-method">
+      <div class="signature">
+        
+        def <strong>id</strong> : String
+
+        <a class="method-permalink" href="#id%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="median:Float32-instance-method">
+      <div class="signature">
+        
+        def <strong>median</strong> : Float32
+
+        <a class="method-permalink" href="#median%3AFloat32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="median_before:Float32-instance-method">
+      <div class="signature">
+        
+        def <strong>median_before</strong> : Float32
+
+        <a class="method-permalink" href="#median_before%3AFloat32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -373,19 +430,7 @@
       <br/>
       <div>
         
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="read_id:String-instance-method">
-      <div class="signature">
-        
-        def <strong>read_id</strong> : String
-
-        <a class="method-permalink" href="#read_id%3AString-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
+          [<a href="https://github.com/kojix2/read_until/blob/01cf9b210f3c834de3e3f8b95a17bb2a1b39c4d8/src/read_until.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
