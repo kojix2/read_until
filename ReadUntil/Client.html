@@ -213,7 +213,7 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L693" target="_blank">
+      <a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L749" target="_blank">
         read_until.cr
       </a>
     
@@ -274,7 +274,17 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#new_session%28config%3AConfig%2Cbuffer%3AReadBuffer%3DChannelBuffer.new%28capacity%3A512%29%29%3ASession-instance-method" class="signature"><strong>#new_session</strong>(config : Config, buffer : ReadBuffer = <span class="t">ChannelBuffer</span>.new(capacity: <span class="n">512</span>)) : Session</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#new_session%28%2A%2Cchannels%3ARange%28Int32%2CInt32%29%3D1..512%2Craw_data%3ARawDataKind%3DRawDataKind%3A%3ACalibrated%2Cmin_chunk_size%3AUInt64%3D0_u64%2Cmode%3AStreamMode%3DStreamMode%3A%3AOneChunk%2Cprefilter%3APrefilter%3DPrefilter.none%2Cbuffer%3AReadBuffer%3DChannelBuffer.new%28capacity%3A512%29%2Caction_batch_size%3AInt32%3D1000%2Caction_throttle%3ATime%3A%3ASpan%3D1.millisecond%2Cunblock_duration%3ATime%3A%3ASpan%3D100.milliseconds%29%3ASession-instance-method" class="signature"><strong>#new_session</strong>(*, channels : Range(Int32, Int32) = <span class="n">1</span>..<span class="n">512</span>, raw_data : RawDataKind = <span class="t">RawDataKind</span><span class="t">::</span><span class="t">Calibrated</span>, min_chunk_size : UInt64 = <span class="n">0_u64</span>, mode : StreamMode = <span class="t">StreamMode</span><span class="t">::</span><span class="t">OneChunk</span>, prefilter : Prefilter = <span class="t">Prefilter</span>.none, buffer : ReadBuffer = <span class="t">ChannelBuffer</span>.new(capacity: <span class="n">512</span>), action_batch_size : Int32 = <span class="n">1000</span>, action_throttle : Time::Span = <span class="n">1</span>.millisecond, unblock_duration : Time::Span = <span class="n">100</span>.milliseconds) : Session</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#open%28config%3AConfig%2Cbuffer%3AReadBuffer%3DChannelBuffer.new%28capacity%3A512%29%2C%26%3ASession-%3ENil%29%3ANil-instance-method" class="signature"><strong>#open</strong>(config : Config, buffer : ReadBuffer = <span class="t">ChannelBuffer</span>.new(capacity: <span class="n">512</span>), & : Session -> Nil) : Nil</a>
         
       </li>
     
@@ -343,7 +353,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L702" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L758" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -375,7 +385,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L695" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L751" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -391,7 +401,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L694" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L750" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -407,7 +417,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L698" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L754" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new_session(config:Config,buffer:ReadBuffer=ChannelBuffer.new(capacity:512)):Session-instance-method">
+      <div class="signature">
+        
+        def <strong>new_session</strong>(config : <a href="../ReadUntil/Config.html">Config</a>, buffer : <a href="../ReadUntil/ReadBuffer.html">ReadBuffer</a> = <span class="t">ChannelBuffer</span>.new(capacity: <span class="n">512</span>)) : <a href="../ReadUntil/Session.html">Session</a>
+
+        <a class="method-permalink" href="#new_session%28config%3AConfig%2Cbuffer%3AReadBuffer%3DChannelBuffer.new%28capacity%3A512%29%29%3ASession-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L812" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -423,7 +449,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L742" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L819" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="open(config:Config,buffer:ReadBuffer=ChannelBuffer.new(capacity:512),&amp;:Session-&gt;Nil):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>open</strong>(config : <a href="../ReadUntil/Config.html">Config</a>, buffer : <a href="../ReadUntil/ReadBuffer.html">ReadBuffer</a> = <span class="t">ChannelBuffer</span>.new(capacity: <span class="n">512</span>), & : <a href="../ReadUntil/Session.html">Session</a> -> Nil) : Nil
+
+        <a class="method-permalink" href="#open%28config%3AConfig%2Cbuffer%3AReadBuffer%3DChannelBuffer.new%28capacity%3A512%29%2C%26%3ASession-%3ENil%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L771" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -439,7 +481,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L709" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L786" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -455,7 +497,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/read_until/blob/1cd751364caab7c6bcae0c31b35a99bc467dd628/src/read_until.cr#L696" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/read_until/blob/69befc932c2532a72d9d88a364a8149ea8ad14f6/src/read_until.cr#L752" target="_blank">View source</a>]
         
       </div>
     </div>
