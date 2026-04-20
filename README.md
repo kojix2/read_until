@@ -29,13 +29,23 @@ Run example:
 crystal run examples/basic.cr
 ```
 
-Expected output shape:
+Minimal streaming shape:
 
-```text
-endpoint=<host:port>
-running=true
-latest_read_id=<read-id>
-queued_actions=<n>
+```crystal
+client = ReadUntil::Client.new(connection)
+
+client.open(
+  channels: 1..512,
+  mode: ReadUntil::StreamMode::OneChunk,
+  prefilter: ReadUntil::Prefilter.strand_like(:strand, :adapter),
+) do |session|
+  session.each_read(batch_size: 16) do |read|
+    signal = read.signal(Int16)
+    if reject?(signal)
+      session.unblock(read, for: 100.milliseconds)
+    end
+  end
+end
 ```
 
 ## Development

@@ -6,164 +6,145 @@ describe ReadUntil do
   end
 end
 
-describe ReadUntil::ReadChunk do
-  it "stores all fields" do
-    chunk = ReadUntil::ReadChunk.new(
+describe ReadUntil::Read do
+  it "stores core fields and exposes read helpers" do
+    read = ReadUntil::Read.new(
       channel: 3,
       id: "read-abc",
+      start_sample: 1000_u64,
       chunk_start_sample: 1000_u64,
       chunk_length: 200_u64,
-      chunk_classifications: [83, 83],
-      raw_data: Bytes[1, 2, 3],
+      classification_ids: [83, 65],
+      raw_bytes: Bytes[1, 2, 3],
       median_before: 180.5_f32,
       median: 75.0_f32,
     )
-    chunk.channel.should eq(3)
-    chunk.id.should eq("read-abc")
-    chunk.chunk_start_sample.should eq(1000_u64)
-    chunk.chunk_classifications.should eq([83, 83])
-    chunk.median_before.should eq(180.5_f32)
+
+    read.channel.should eq(3)
+    read.id.should eq("read-abc")
+    read.start_sample.should eq(1000_u64)
+    read.chunk_length.should eq(200_u64)
+    read.strand?.should be_true
+    read.adapter?.should be_true
+    read.classified_as?(ReadUntil::ReadClass::Strand).should be_true
+    read.classified_as?(:adapter).should be_true
+    read.ref.channel.should eq(3)
+    read.ref.id.should eq("read-abc")
   end
 
-  it "defaults optional fields" do
-    chunk = ReadUntil::ReadChunk.new(channel: 1, id: "r1")
-    chunk.raw_data.should eq(Bytes.empty)
-    chunk.chunk_classifications.should be_empty
-  end
-end
+  it "decodes Int16 little-endian signal" do
+    raw = Bytes[0x01, 0x00, 0xFF, 0x7F]
+    read = ReadUntil::Read.new(channel: 1, id: "r1", raw_bytes: raw)
+    signal = read.signal(Int16)
 
-describe ReadUntil::ReadCache do
-  it "raises when size < 1" do
-    expect_raises(ArgumentError) { ReadUntil::ReadCache.new(0) }
+    signal.size.should eq(2)
+    signal[0].should eq(1_i16)
+    signal[1].should eq(32_767_i16)
   end
 
-  it "stores and retrieves the latest chunk per channel" do
-    cache = ReadUntil::ReadCache.new(10)
-    a = ReadUntil::ReadChunk.new(channel: 1, id: "r1")
-    b = ReadUntil::ReadChunk.new(channel: 1, id: "r2")
-    cache[1] = a
-    cache[1] = b
-    cache[1]?.try(&.id).should eq("r2")
-  end
+  it "decodes Float32 little-endian signal" do
+    io = IO::Memory.new
+    IO::ByteFormat::LittleEndian.encode(1.5_f32, io)
+    IO::ByteFormat::LittleEndian.encode(-2.25_f32, io)
+    read = ReadUntil::Read.new(channel: 1, id: "r2", raw_bytes: io.to_slice)
 
-  it "counts replaced chunks from the same read" do
-    cache = ReadUntil::ReadCache.new(10)
-    r = ReadUntil::ReadChunk.new(channel: 1, id: "r1")
-    cache[1] = r
-    cache[1] = r
-    cache.replaced.should eq(1)
-    cache.missed.should eq(0)
-  end
-
-  it "counts missed reads when a distinct read overwrites" do
-    cache = ReadUntil::ReadCache.new(10)
-    cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "r1")
-    cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "r2")
-    cache.missed.should eq(1)
-    cache.replaced.should eq(0)
-  end
-
-  it "evicts the oldest entry when full" do
-    cache = ReadUntil::ReadCache.new(2)
-    cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "a")
-    cache[2] = ReadUntil::ReadChunk.new(channel: 2, id: "b")
-    cache[3] = ReadUntil::ReadChunk.new(channel: 3, id: "c") # evicts channel 1
-    cache[1]?.should be_nil
-    cache[2]?.should_not be_nil
-    cache[3]?.should_not be_nil
-    cache.missed.should eq(1)
-  end
-
-  it "pops newest entry by default" do
-    cache = ReadUntil::ReadCache.new(10)
-    cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "old")
-    cache[2] = ReadUntil::ReadChunk.new(channel: 2, id: "new")
-    result = cache.pop(1)
-    result.size.should eq(1)
-    result[0][0].should eq(2)
-    result[0][1].id.should eq("new")
-    cache.current_size.should eq(1)
-  end
-
-  it "pops oldest entry when newest_first is false" do
-    cache = ReadUntil::ReadCache.new(10)
-    cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "first")
-    cache[2] = ReadUntil::ReadChunk.new(channel: 2, id: "second")
-    result = cache.pop(1, newest_first: false)
-    result[0][1].id.should eq("first")
-  end
-
-  it "pops multiple entries" do
-    cache = ReadUntil::ReadCache.new(10)
-    (1..5).each { |i| cache[i] = ReadUntil::ReadChunk.new(channel: i, id: "r#{i}") }
-    result = cache.pop(3)
-    result.size.should eq(3)
-    cache.current_size.should eq(2)
-  end
-
-  it "returns empty array when cache is empty" do
-    cache = ReadUntil::ReadCache.new(10)
-    cache.pop(5).should be_empty
-  end
-
-  it "clears all entries" do
-    cache = ReadUntil::ReadCache.new(10)
-    cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "r1")
-    cache.clear
-    cache.current_size.should eq(0)
-    cache[1]?.should be_nil
+    signal = read.signal(Float32)
+    signal.size.should eq(2)
+    signal[0].should be_close(1.5_f32, 0.0001)
+    signal[1].should be_close(-2.25_f32, 0.0001)
   end
 end
 
-describe ReadUntil::StreamOptions do
+describe ReadUntil::Prefilter do
+  it "accepts strand-like reads when configured" do
+    prefilter = ReadUntil::Prefilter.strand_like(:strand, :adapter)
+
+    prefilter.allow?([83]).should be_true
+    prefilter.allow?([65]).should be_true
+    prefilter.allow?([78]).should be_false
+  end
+
+  it "allows all when disabled" do
+    ReadUntil::Prefilter.none.allow?([999]).should be_true
+  end
+end
+
+describe ReadUntil::ChannelBuffer do
+  it "raises when capacity < 1" do
+    expect_raises(ArgumentError) { ReadUntil::ChannelBuffer.new(0) }
+  end
+
+  it "stores latest read per channel" do
+    buffer = ReadUntil::ChannelBuffer.new(10)
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "r1"))
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "r2"))
+
+    popped = buffer.pop(1)
+    popped.size.should eq(1)
+    popped[0].id.should eq("r2")
+  end
+
+  it "counts replaced chunks from same read" do
+    buffer = ReadUntil::ChannelBuffer.new(10)
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "r1"))
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "r1"))
+
+    buffer.replaced_chunks.should eq(1)
+    buffer.missed_reads.should eq(0)
+  end
+
+  it "counts missed reads for distinct overwrites" do
+    buffer = ReadUntil::ChannelBuffer.new(10)
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "r1"))
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "r2"))
+
+    buffer.missed_reads.should eq(1)
+    buffer.replaced_chunks.should eq(0)
+  end
+
+  it "evicts oldest when full" do
+    buffer = ReadUntil::ChannelBuffer.new(2)
+    buffer.push(ReadUntil::Read.new(channel: 1, id: "a"))
+    buffer.push(ReadUntil::Read.new(channel: 2, id: "b"))
+    buffer.push(ReadUntil::Read.new(channel: 3, id: "c"))
+
+    popped = buffer.pop(2, order: ReadUntil::PopOrder::Oldest)
+    popped.map(&.channel).should eq([2, 3])
+    buffer.missed_reads.should eq(1)
+  end
+end
+
+describe ReadUntil::Config do
   it "has sensible defaults" do
-    opts = ReadUntil::StreamOptions.new
-    opts.first_channel.should eq(1)
-    opts.last_channel.should eq(512)
-    opts.one_chunk.should be_true
-    opts.filter_strands.should be_false
+    cfg = ReadUntil::Config.new
+
+    cfg.channels.should eq(1..512)
+    cfg.raw_data.should eq(ReadUntil::RawDataKind::Calibrated)
+    cfg.one_chunk?.should be_true
+  end
+
+  it "can be reconfigured with #with" do
+    cfg = ReadUntil::Config.new
+    updated = cfg.with(channels: 5..10, min_chunk_size: 20_u64)
+
+    updated.channels.should eq(5..10)
+    updated.min_chunk_size.should eq(20_u64)
+    updated.mode.should eq(cfg.mode)
   end
 end
 
-describe ReadUntil::ReadUntilClient do
-  it "exposes endpoint from the connection" do
+describe ReadUntil::Client do
+  it "creates a session with expected defaults" do
     config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
     manager = Minknow::Manager.new(config)
     position = Minknow::FlowCellPosition.new("X4", "localhost", 9600)
     connection = manager.connect(position)
 
-    client = ReadUntil::ReadUntilClient.new(connection: connection)
-    client.endpoint.should eq("localhost:9600")
-  end
+    client = ReadUntil::Client.new(connection)
+    session = client.new_session
 
-  it "is not running before run is called" do
-    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
-    connection = Minknow::Manager.new(config).connect(
-      Minknow::FlowCellPosition.new("X5", "localhost", 9601)
-    )
-    client = ReadUntil::ReadUntilClient.new(connection: connection)
-    client.running?.should be_false
-  end
-
-  it "queue_length reflects cache contents" do
-    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
-    connection = Minknow::Manager.new(config).connect(
-      Minknow::FlowCellPosition.new("X6", "localhost", 9602)
-    )
-    client = ReadUntil::ReadUntilClient.new(connection: connection, cache_size: 512)
-    client.read_cache[7] = ReadUntil::ReadChunk.new(channel: 7, id: "r1")
-    client.queue_length.should eq(1)
-  end
-
-  it "read_chunks delegates to cache" do
-    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
-    connection = Minknow::Manager.new(config).connect(
-      Minknow::FlowCellPosition.new("X7", "localhost", 9603)
-    )
-    client = ReadUntil::ReadUntilClient.new(connection: connection)
-    client.read_cache[1] = ReadUntil::ReadChunk.new(channel: 1, id: "c1")
-    client.read_cache[2] = ReadUntil::ReadChunk.new(channel: 2, id: "c2")
-    result = client.read_chunks(1)
-    result.size.should eq(1)
+    session.running?.should be_false
+    session.one_chunk?.should be_true
+    session.config.channels.should eq(1..512)
   end
 end
