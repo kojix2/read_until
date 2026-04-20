@@ -111,6 +111,22 @@ module ReadUntil
       :unclassed     => ReadClass::Unclassed,
     }
 
+    CLASS_TO_SYMBOL = {
+      ReadClass::Strand       => :strand,
+      ReadClass::Strand1      => :strand1,
+      ReadClass::Multiple     => :multiple,
+      ReadClass::Zero         => :zero,
+      ReadClass::Adapter      => :adapter,
+      ReadClass::MuxUncertain => :mux_uncertain,
+      ReadClass::User2        => :user2,
+      ReadClass::User1        => :user1,
+      ReadClass::Event        => :event,
+      ReadClass::Pore         => :pore,
+      ReadClass::Unavailable  => :unavailable,
+      ReadClass::Transition   => :transition,
+      ReadClass::Unclassed    => :unclassed,
+    }
+
     getter ids_to_names : Hash(Int32, Symbol)
     getter names_to_ids : Hash(Symbol, Int32)
 
@@ -128,6 +144,12 @@ module ReadUntil
 
     def id_for(name : Symbol) : Int32?
       @names_to_ids[name]?
+    end
+
+    def id_for(klass : ReadClass) : Int32?
+      symbol = CLASS_TO_SYMBOL[klass]?
+      return nil unless symbol
+      id_for(symbol)
     end
 
     def symbol_for(id : Int32) : Symbol?
@@ -149,10 +171,17 @@ module ReadUntil
       new(false, Set(Int32).new)
     end
 
-    def self.strand_like(*classes : Symbol, registry : ClassificationRegistry = ClassificationRegistry.default) : Prefilter
+    def self.strand_like(*classes : Symbol | ReadClass, registry : ClassificationRegistry = ClassificationRegistry.default) : Prefilter
       class_ids = Set(Int32).new
-      classes.each do |name|
-        if id = registry.id_for(name)
+      classes.each do |klass|
+        id = case klass
+             when Symbol
+               registry.id_for(klass)
+             when ReadClass
+               registry.id_for(klass)
+             end
+
+        if id
           class_ids.add(id)
         end
       end
@@ -686,6 +715,33 @@ module ReadUntil
     getter calibrated : String
     getter uncalibrated : String
 
+    def self.from_data_types(types : MinknowApi::Data::GetDataTypesResponse) : SignalFormat
+      calibrated = dtype_name(types.calibrated_signal)
+      uncalibrated = dtype_name(types.uncalibrated_signal)
+      new(calibrated: calibrated, uncalibrated: uncalibrated)
+    end
+
+    def self.dtype_name(data_type : MinknowApi::Data::GetDataTypesResponse::DataType?) : String
+      return "unknown" unless data_type
+
+      signed = data_type.type_.raw == MinknowApi::Data::GetDataTypesResponse::DataType::Type::SIGNED_INTEGER.value
+      unsigned = data_type.type_.raw == MinknowApi::Data::GetDataTypesResponse::DataType::Type::UNSIGNED_INTEGER.value
+      floating = data_type.type_.raw == MinknowApi::Data::GetDataTypesResponse::DataType::Type::FLOATING_POINT.value
+
+      base = if floating
+               "float#{data_type.size * 8}"
+             elsif signed
+               "int#{data_type.size * 8}"
+             elsif unsigned
+               "uint#{data_type.size * 8}"
+             else
+               "unknown"
+             end
+
+      return base unless data_type.big_endian
+      "#{base}_be"
+    end
+
     def initialize(@calibrated : String = "float32", @uncalibrated : String = "int16")
     end
   end
@@ -703,7 +759,28 @@ module ReadUntil
       @connection : Minknow::Connection,
       @classifications : ClassificationRegistry = ClassificationRegistry.default,
     )
-      @signal_format = SignalFormat.new
+      @signal_format = fetch_signal_format
+    end
+
+    private def fetch_signal_format : SignalFormat
+      SignalFormat.from_data_types(connection.data.data_types)
+    rescue
+      SignalFormat.new
+    end
+
+    def open(
+      config : Config,
+      buffer : ReadBuffer = ChannelBuffer.new(capacity: 512),
+      & : Session -> Nil
+    ) : Nil
+      session = new_session(config, buffer: buffer)
+
+      begin
+        session.start
+        yield session
+      ensure
+        session.close
+      end
     end
 
     def open(
@@ -719,24 +796,24 @@ module ReadUntil
       unblock_duration : Time::Span = 100.milliseconds,
       & : Session -> Nil
     ) : Nil
-      session = new_session(
+      config = Config.new(
         channels: channels,
         raw_data: raw_data,
         min_chunk_size: min_chunk_size,
         mode: mode,
         prefilter: prefilter,
-        buffer: buffer,
         action_batch_size: action_batch_size,
         action_throttle: action_throttle,
         unblock_duration: unblock_duration,
       )
+      open(config, buffer: buffer) { |session| yield session }
+    end
 
-      begin
-        session.start
-        yield session
-      ensure
-        session.close
-      end
+    def new_session(
+      config : Config,
+      buffer : ReadBuffer = ChannelBuffer.new(capacity: 512),
+    ) : Session
+      Session.new(connection, config, buffer, classifications)
     end
 
     def new_session(
@@ -761,7 +838,7 @@ module ReadUntil
         action_throttle: action_throttle,
         unblock_duration: unblock_duration,
       )
-      Session.new(connection, config, buffer, classifications)
+      new_session(config, buffer: buffer)
     end
   end
 end

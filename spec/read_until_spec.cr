@@ -64,6 +64,15 @@ describe ReadUntil::Prefilter do
     prefilter.allow?([78]).should be_false
   end
 
+  it "accepts ReadClass and mixed class inputs" do
+    typed = ReadUntil::Prefilter.strand_like(ReadUntil::ReadClass::Strand, ReadUntil::ReadClass::Adapter)
+    mixed = ReadUntil::Prefilter.strand_like(ReadUntil::ReadClass::Strand, :adapter)
+
+    typed.allow?([83]).should be_true
+    typed.allow?([65]).should be_true
+    mixed.allow?([65]).should be_true
+  end
+
   it "allows all when disabled" do
     ReadUntil::Prefilter.none.allow?([999]).should be_true
   end
@@ -133,6 +142,41 @@ describe ReadUntil::Config do
   end
 end
 
+describe ReadUntil::SignalFormat do
+  it "builds format strings from MinKNOW data types" do
+    calibrated = MinknowApi::Data::GetDataTypesResponse::DataType.new
+    calibrated.type_ = Proto::OpenEnum(MinknowApi::Data::GetDataTypesResponse::DataType::Type).new(
+      MinknowApi::Data::GetDataTypesResponse::DataType::Type::FLOATING_POINT.value
+    )
+    calibrated.size = 4
+
+    uncalibrated = MinknowApi::Data::GetDataTypesResponse::DataType.new
+    uncalibrated.type_ = Proto::OpenEnum(MinknowApi::Data::GetDataTypesResponse::DataType::Type).new(
+      MinknowApi::Data::GetDataTypesResponse::DataType::Type::SIGNED_INTEGER.value
+    )
+    uncalibrated.size = 2
+
+    types = MinknowApi::Data::GetDataTypesResponse.new
+    types.calibrated_signal = calibrated
+    types.uncalibrated_signal = uncalibrated
+
+    format = ReadUntil::SignalFormat.from_data_types(types)
+    format.calibrated.should eq("float32")
+    format.uncalibrated.should eq("int16")
+  end
+
+  it "marks big-endian types" do
+    data_type = MinknowApi::Data::GetDataTypesResponse::DataType.new
+    data_type.type_ = Proto::OpenEnum(MinknowApi::Data::GetDataTypesResponse::DataType::Type).new(
+      MinknowApi::Data::GetDataTypesResponse::DataType::Type::UNSIGNED_INTEGER.value
+    )
+    data_type.size = 2
+    data_type.big_endian = true
+
+    ReadUntil::SignalFormat.dtype_name(data_type).should eq("uint16_be")
+  end
+end
+
 describe ReadUntil::Client do
   it "creates a session with expected defaults" do
     config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
@@ -146,5 +190,24 @@ describe ReadUntil::Client do
     session.running?.should be_false
     session.one_chunk?.should be_true
     session.config.channels.should eq(1..512)
+  end
+
+  it "creates a session from Config" do
+    config = Minknow::ConnectionConfig.new(host: "localhost", port: 9501, tls: true)
+    manager = Minknow::Manager.new(config)
+    position = Minknow::FlowCellPosition.new("X5", "localhost", 9601)
+    connection = manager.connect(position)
+
+    client = ReadUntil::Client.new(connection)
+    stream_config = ReadUntil::Config.new(
+      channels: 10..20,
+      mode: ReadUntil::StreamMode::MultiChunk,
+      prefilter: ReadUntil::Prefilter.strand_like(ReadUntil::ReadClass::Adapter),
+    )
+
+    session = client.new_session(stream_config)
+    session.config.channels.should eq(10..20)
+    session.one_chunk?.should be_false
+    session.config.prefilter.allow?([65]).should be_true
   end
 end
