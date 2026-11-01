@@ -1,5 +1,8 @@
 # read_until.cr
 
+[![Test](https://github.com/kojix2/read_until/actions/workflows/test.yml/badge.svg)](https://github.com/kojix2/read_until/actions/workflows/test.yml)
+[![Lines of Code](https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2Fread_until%2Flines)](https://tokei.kojix2.net/github/kojix2/read_until)
+
 Read Until sessions, signal buffers, classification filters and action tracking
 for Crystal. Uses [minknow.cr](https://github.com/kojix2/minknow) for connectivity.
 
