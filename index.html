@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.19.1">
+<meta name="generator" content="Crystal Docs 1.21.0">
 <meta name="crystal_docs.project_version" content="main">
 <meta name="crystal_docs.project_name" content="read_until">
 
@@ -178,64 +178,58 @@
     <use href="#octicon-link"/>
   </svg>
 </a>read_until.cr</h1>
-<p><a href="https://github.com/kojix2/read_until/actions/workflows/test.yml"><img src="https://github.com/kojix2/read_until/actions/workflows/test.yml/badge.svg" alt="Test" /></a>
-<a href="https://tokei.kojix2.net/github/kojix2/read_until"><img src="https://img.shields.io/endpoint?url=https://tokei.kojix2.net/badge/github/kojix2/read_until/lines" alt="Lines of Code" /></a></p>
-<p>🕳️⚡ Oxford Nanopore <a href="https://github.com/nanoporetech/read_until_api">Read Until</a> - for <a href="https://crystal-lang.org/">Crystal</a></p>
+<p>Read Until sessions, signal buffers, classification filters and action tracking
+for Crystal. Uses <a href="https://github.com/kojix2/minknow">minknow.cr</a> for connectivity.</p>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Installation</h2>
-<p>Add the dependency to your shard.yml:</p>
+<p>Requires Crystal &gt;= 1.20 and <a href="https://github.com/kojix2/grpc#installation">libnghttp2</a>.
+Add to <code>shard.yml</code>, then run <code>shards install</code>:</p>
 <pre><code class="language-yaml">dependencies:
   read_until:
     github: kojix2/read_until</code></pre>
-<p>Run <code>shards install</code></p>
-<h2><a id="usage" class="anchor" href="#usage">
+<h2><a id="stream-reads" class="anchor" href="#stream-reads">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Usage</h2>
-<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;read_until&quot;</span></code></pre>
-<p>Run example:</p>
-<pre><code class="language-sh">crystal run examples/basic.cr</code></pre>
-<p>Minimal streaming shape:</p>
-<pre><code class="language-crystal">client <span class="o">=</span> <span class="t">ReadUntil</span><span class="t">::</span><span class="t">Client</span>.new(connection)
+</a>Stream reads</h2>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;read_until&quot;</span>
 
-client.open(
-  channels: <span class="n">1</span>..<span class="n">512</span>,
-  mode: <span class="t">ReadUntil</span><span class="t">::</span><span class="t">StreamMode</span><span class="t">::</span><span class="t">OneChunk</span>,
-  prefilter: <span class="t">ReadUntil</span><span class="t">::</span><span class="t">Prefilter</span>.strand_like(<span class="n">:strand</span>, <span class="n">:adapter</span>),
-) <span class="k">do</span> <span class="o">|</span>session<span class="o">|</span>
-  session.each_read(batch_size: <span class="n">16</span>) <span class="k">do</span> <span class="o">|</span>read<span class="o">|</span>
-    signal <span class="o">=</span> read.signal(<span class="t">Int16</span>)
-    <span class="k">if</span> reject?(signal)
-      session.unblock(read, <span class="k">for</span>: <span class="n">100</span>.milliseconds)
+manager <span class="o">=</span> <span class="t">Minknow</span><span class="t">::</span><span class="t">Manager</span>.new
+<span class="k">begin</span>
+  position <span class="o">=</span> manager.fetch_flow_cell_positions.first? <span class="o">||</span> raise <span class="s">&quot;No sequencing position&quot;</span>
+  connection <span class="o">=</span> manager.connect(position)
+  client <span class="o">=</span> <span class="t">ReadUntil</span><span class="t">::</span><span class="t">Client</span>.new(connection)
+  client.open(channels: <span class="n">1</span>..<span class="n">128</span>,
+    raw_data: <span class="t">ReadUntil</span><span class="t">::</span><span class="t">RawDataKind</span><span class="t">::</span><span class="t">Uncalibrated</span>,
+    mode: <span class="t">ReadUntil</span><span class="t">::</span><span class="t">StreamMode</span><span class="t">::</span><span class="t">OneChunk</span>) <span class="k">do</span> <span class="o">|</span>session<span class="o">|</span>
+    session.each_read(batch_size: <span class="n">16</span>) <span class="k">do</span> <span class="o">|</span>read<span class="o">|</span>
+      puts <span class="s">&quot;</span><span class="i">#{</span>read.channel<span class="i">}</span><span class="s">: </span><span class="i">#{</span>read.signal(<span class="t">Int16</span>).size<span class="i">}</span><span class="s"> samples&quot;</span>
     <span class="k">end</span>
   <span class="k">end</span>
+<span class="k">ensure</span>
+  connection.try <span class="o">&amp;</span>.channel.close
+  manager.channel.close
 <span class="k">end</span></code></pre>
+<p><code>Uncalibrated</code> supplies raw ADC values; the default <code>Calibrated</code> mode uses
+<code>signal(Float32)</code> with the usual device formats. <code>OneChunk</code> returns the first
+chunk per read; use <code>MultiChunk</code> for subsequent chunks.
+<code>session.unblock(read, for: 100.milliseconds)</code> ejects a molecule;
+<code>session.stop(read)</code> stops further signal delivery while sequencing continues.
+<code>Client#open</code> closes the session when its block exits.</p>
+<p>See <a href="https://github.com/kojix2/minknow">MinKNOW authentication</a>
+for TLS, CA and token configuration.</p>
 <h2><a id="development" class="anchor" href="#development">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Development</h2>
-<ul>
-<li>Your contributions and feedback are welcome</li>
-<li>This library was generated by an AI agent based on human instructions.</li>
-</ul>
-<h2><a id="license" class="anchor" href="#license">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>License</h2>
-<p>This project is distributed under the Mozilla Public License 2.0 (MPL-2.0).</p>
-<p>It includes a Crystal port of Oxford Nanopore's Python <code>read_until_api</code> and
-inherits the upstream license requirements for derived source files.</p>
-<ul>
-<li>Project license: <a href="LICENSE">LICENSE</a></li>
-<li>Upstream project: https://github.com/nanoporetech/read_until_api</li>
-<li>Upstream license text: https://github.com/nanoporetech/read_until_api/blob/release/LICENSE.md</li>
-</ul>
+<pre><code class="language-sh">crystal spec
+crystal run examples/basic.cr</code></pre>
+<p><code>basic.cr</code> demonstrates a synthetic buffer without starting a live stream.</p>
+<p>License: <a href="LICENSE">MPL-2.0</a>, including derived <a href="https://github.com/nanoporetech/read_until_api">Oxford Nanopore Read Until</a> code.</p>
 </div>
 </body>
 </html>
